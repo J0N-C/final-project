@@ -7,8 +7,12 @@ const app = express();
 
 app.use(staticMiddleware);
 
-app.get('/api/test', (req, res) => {
-  res.send('server is working!');
+const jsonMiddleware = express.json();
+
+app.use(jsonMiddleware);
+
+app.post('/api/addrecipe', (req, res) => {
+
 });
 
 app.use(errorMiddleware);
