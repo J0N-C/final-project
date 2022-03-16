@@ -7,6 +7,10 @@ const app = express();
 
 app.use(staticMiddleware);
 
+app.get('/api/test', (req, res) => {
+  res.send('server is working!');
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
