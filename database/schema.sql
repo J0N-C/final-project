@@ -2,6 +2,7 @@ set client_min_messages to warning;
 
 -- DANGER: this is NOT how to do it in the real world.
 -- `drop schema` INSTANTLY ERASES EVERYTHING.
+
 drop schema "public" cascade;
 
 create schema "public";
@@ -20,6 +21,8 @@ CREATE TABLE "users" (
 CREATE TABLE "recipes" (
 	"recipeId" serial NOT NULL,
 	"name" TEXT NOT NULL,
+  -- DELETE INGREDIENTS COLUMN AND REPLACE IN FUTURE, THIS IS FOR TEMP TESTING
+  "ingredients" TEXT NOT NULL,
 	"instructions" TEXT NOT NULL,
 	"notes" TEXT DEFAULT NULL,
 	"saved" TIMESTAMP NOT NULL default now(),
