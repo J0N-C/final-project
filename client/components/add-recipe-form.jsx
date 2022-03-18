@@ -40,7 +40,7 @@ export default class AddRecipeForm extends React.Component {
   render() {
     return (
       <div id="add-form-container">
-        <form id="add-recipe-form" className="flex-col" onSubmit={this.handleSubmit}>
+        <form id="add-recipe-form" className="flex-col box-shadow" onSubmit={this.handleSubmit}>
           <label htmlFor="name">Recipe Name</label>
           <input required name="name" id="recipe-name" onChange={this.handleChange} type="text" value={this.state.name} placeholder="Enter recipe name" />
           <label htmlFor="image">Image URL</label>
@@ -53,7 +53,7 @@ export default class AddRecipeForm extends React.Component {
           <label htmlFor="notes">Notes</label>
           <textarea name="notes" id="notes" onChange={this.handleChange} value={this.state.notes} placeholder="Enter optional notes here" rows="3"/>
           <label htmlFor="tags">Tags</label>
-          <textarea name="tags" id="tags" onChange={this.handleChange} value={this.state.tags} placeholder="Enter optional tags separated by spaces, ex: lunch beef dairy gluten" rows="3"/>
+          <textarea name="tags" id="tags" onChange={this.handleChange} value={this.state.tags} placeholder="Enter optional tags separated by commas, ex: lunch, beef, dairy, gluten" rows="3"/>
           <button type="submit">Add Recipe</button>
         </form>
       </div>
