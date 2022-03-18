@@ -1,0 +1,74 @@
+* {
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  font-size: 14pt;
+}
+
+body {
+  background-color: #f0f0f0;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: 30pt;
+  color: white;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 18pt;
+  font-weight: 600;
+}
+
+input,
+textarea {
+  margin-bottom: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+::placeholder {
+  color: #aaa;
+}
+
+button {
+  border: none;
+  background-color: #f3c892;
+  border-radius: 6px;
+  padding: 0.25rem;
+  font-size: 16pt;
+}
+
+.box-shadow {
+  box-shadow: 0 0 14px 4px #00000025;
+}
+
+#main-header {
+  background-color: #286d61;
+  padding: 0.25rem 1rem;
+}
+
+#sub-header-top {
+  background-color: #a3da8d;
+  padding: 0.25rem 1rem;
+}
+
+#sub-header-bot {
+  background-color: #fff1bd;
+  min-height: 24pt;
+  padding: 0.25rem 1rem;
+}
+
+#add-recipe-form {
+  margin: 1rem;
+  padding: 1rem;
+  border: 2px solid #f3c892;
+  border-radius: 8px;
+  background-color: white;
+}
