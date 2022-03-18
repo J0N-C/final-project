@@ -1,9 +1,10 @@
 import React from 'react';
+import MainHeader from '../components/main-header';
 
 export default function Home(props) {
   return (
       <>
-        <h1>HOMEPAGE PLACEHOLDER</h1>
+        <MainHeader />
       </>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import AddRecipeForm from '../components/add-recipe-form';
+import MainHeader from '../components/main-header';
 
 function newRecipe(newRecipe) {
   const addedRecipe = JSON.stringify(newRecipe);
@@ -13,6 +14,9 @@ function newRecipe(newRecipe) {
 export default function Home(props) {
 
   return (
-    <AddRecipeForm onSubmit={newRecipe}/>
+    <>
+      <MainHeader />
+      <AddRecipeForm onSubmit={newRecipe} />
+    </>
   );
 }

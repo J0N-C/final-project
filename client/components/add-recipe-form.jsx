@@ -47,13 +47,13 @@ export default class AddRecipeForm extends React.Component {
           <input name="image" id="image" onChange={this.handleChange} type="url" value={this.state.image} placeholder="Optional Recipe Image" />
           {/* Replace in future with separate ingredients list component */}
           <label htmlFor="ingredients">Ingredients</label>
-          <textarea required name="ingredients" id="ingredients" onChange={this.handleChange} value={this.state.ingredients} placeholder="Enter recipe ingredients List" />
+          <textarea required name="ingredients" id="ingredients" onChange={this.handleChange} value={this.state.ingredients} placeholder="Enter recipe ingredients List" rows="5"/>
           <label htmlFor="instructions">Instructions</label>
-          <textarea required name="instructions" id="instructions" onChange={this.handleChange} value={this.state.instructions} placeholder="Enter recipe instructions List" />
+          <textarea required name="instructions" id="instructions" onChange={this.handleChange} value={this.state.instructions} placeholder="Enter recipe instructions List" rows="5"/>
           <label htmlFor="notes">Notes</label>
-          <textarea name="notes" id="notes" onChange={this.handleChange} value={this.state.notes} placeholder="Enter optional notes here"/>
+          <textarea name="notes" id="notes" onChange={this.handleChange} value={this.state.notes} placeholder="Enter optional notes here" rows="3"/>
           <label htmlFor="tags">Tags</label>
-          <textarea name="tags" id="tags" onChange={this.handleChange} value={this.state.tags} placeholder="Enter optional tags separated by spaces, ex: lunch, beef, dairy, gluten"/>
+          <textarea name="tags" id="tags" onChange={this.handleChange} value={this.state.tags} placeholder="Enter optional tags separated by spaces, ex: lunch beef dairy gluten" rows="3"/>
           <button type="submit">Add Recipe</button>
         </form>
       </div>

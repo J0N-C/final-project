@@ -1,12 +1,52 @@
-.flex {
-  display: flex;
+* {
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  font-size: 14pt;
 }
 
-.col-full {
-  width: 100%;
+body {
+  background-color: #f0f0f0;
 }
 
-.flex-col {
-  display: flex;
-  flex-direction: column;
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: 30pt;
+  color: white;
+}
+
+input,
+textarea {
+  margin-bottom: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+::placeholder {
+  color: #aaa;
+}
+
+button {
+  border: none;
+  background-color: #f3c892;
+  border-radius: 6px;
+  padding: 0.25rem;
+  font-size: 16pt;
+}
+
+#main-header {
+  background-color: #286d61;
+  padding: 0.25rem 1rem;
+}
+
+#add-recipe-form {
+  margin: 1rem;
+  padding: 1rem;
+  border: 2px solid #f3c892;
+  border-radius: 8px;
+  background-color: white;
 }
