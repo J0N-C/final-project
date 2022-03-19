@@ -13,7 +13,7 @@ function newRecipe(newRecipe) {
     .then(res => res.json());
 }
 
-export default function Home(props) {
+export default function AddRecipe(props) {
 
   return (
     <>

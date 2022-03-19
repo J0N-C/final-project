@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './pages/home';
 import AddRecipe from './pages/add-recipe';
+import ViewRecipes from './pages/view-recipes';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -27,6 +28,8 @@ export default class App extends React.Component {
       return <Home/>;
     } else if (route.path === 'add-recipe') {
       return <AddRecipe />;
+    } else if (route.path === 'view-recipes') {
+      return <ViewRecipes />;
     } else {
       return <h1>404 Page not found!</h1>;
     }

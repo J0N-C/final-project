@@ -7,7 +7,7 @@ export default function navBar(props) {
         <a href='#add-recipe'>
           <i className="fa-solid fa-file-circle-plus"></i>
         </a>
-        <a>
+        <a href='#view-recipes'>
           <i className="fa-solid fa-book-open"></i>
         </a>
         <a>
