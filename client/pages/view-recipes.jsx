@@ -5,13 +5,13 @@ import Navbar from '../components/navbar';
 
 export default function Home(props) {
   return (
-      <>
-        <MainHeader />
-        <SubHeader />
-        <div id="homepage">
-          PLACEHOLDER
-        </div>
-        <Navbar />
-      </>
+    <>
+      <MainHeader />
+      <SubHeader />
+      <div>
+        PLACEHOLDER
+      </div>
+      <Navbar />
+    </>
   );
 }

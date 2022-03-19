@@ -37,6 +37,11 @@ textarea {
   color: #aaa;
 }
 
+a,
+button {
+  cursor: pointer;
+}
+
 button {
   border: none;
   background-color: #f3c892;
@@ -45,18 +50,38 @@ button {
   font-size: 16pt;
 }
 
+i.fa-solid {
+  color: black;
+  font-size: 32pt;
+  margin: 0.5rem;
+}
+
 .box-shadow {
   box-shadow: 0 0 14px 4px #00000025;
+}
+
+#homepage {
+  min-height: 100vh;
 }
 
 #main-header {
   background-color: #286d61;
   padding: 0.25rem 1rem;
+  width: 100%;
+  position: sticky;
+  top: 0;
 }
 
-#sub-header-top {
+#sub-header-top,
+#navbar {
   background-color: #a3da8d;
   padding: 0.25rem 1rem;
+  max-height: 4rem;
+}
+
+#navbar {
+  position: sticky;
+  bottom: 0;
 }
 
 #sub-header-bot {
