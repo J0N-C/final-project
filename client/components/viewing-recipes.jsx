@@ -18,7 +18,11 @@ export default class ViewingRecipes extends React.Component {
   render() {
     return (
       <div id="recipes-list">
-        <CompactCards recipes={this.state.recipes} />
+        {
+          this.state.recipes.map(recipe => {
+            return <CompactCards recipe={recipe} key={recipe.recipeId} />;
+          })
+        }
       </div>
     );
   }

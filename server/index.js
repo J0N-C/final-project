@@ -25,6 +25,7 @@ app.get('/api/recipes', (req, res, next) => {
   const placeholderUser = 1;
   const sql = `
   select "r"."name",
+    "r"."recipeId",
     "r"."ingredients",
     "r"."instructions",
     "r"."notes",

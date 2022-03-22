@@ -122,10 +122,14 @@ i.fa-solid {
 #add-form-container,
 .recipe-card-compact {
   margin: 1rem;
-  margin-bottom: 5rem;
   border: 2px solid #f3c892;
   border-radius: 8px;
   background-color: white;
+}
+
+#add-form-container,
+.recipe-card-compact:last-child {
+  margin-bottom: 5rem;
 }
 
 #add-recipe-form,

@@ -2,7 +2,7 @@ import React from 'react';
 import checkDate from './checkdate';
 
 export default function CompactCards(props) {
-  const recipe = props.recipes[0];
+  const recipe = props.recipe;
   if (!recipe) {
     return (
       <>
@@ -12,8 +12,7 @@ export default function CompactCards(props) {
   }
 
   return (
-    <li>
-      <div className="recipe-card-compact">
+      <li className="recipe-card-compact">
         <div className="card-title">
           <h2>{recipe.name}</h2>
         </div>
@@ -30,7 +29,6 @@ export default function CompactCards(props) {
             <p>{checkDate(recipe.made)}</p>
           </div>
         </div>
-      </div>
-    </li>
+      </li>
   );
 }
