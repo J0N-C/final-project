@@ -12,7 +12,7 @@ export default function CompactCards(props) {
   }
 
   return (
-      <li className="recipe-card-compact">
+      <li id={recipe.recipeId} className="recipe-card-compact">
         <div className="card-title">
           <h2>{recipe.name}</h2>
         </div>
