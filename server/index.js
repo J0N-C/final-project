@@ -20,6 +20,31 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
+app.get('/api/recipes', (req, res, next) => {
+  // REPLACE USERID!!! Testing as 1 with dummy user
+  const placeholderUser = 1;
+  const sql = `
+  select "r"."name",
+    "r"."ingredients",
+    "r"."instructions",
+    "r"."notes",
+    "r"."saved",
+    "r"."lastMade",
+    "r"."lastEdited",
+    "tags"."name" as "tags"
+    from  "recipes" as "r"
+    join "recipeTags" using ("recipeId")
+    join "tags" using ("tagId")
+    where "userId" = $1
+  `;
+  const params = [placeholderUser];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/addrecipe', (req, res, next) => {
   // REPLACE USERID!!! Testing as 1 with dummy user
   const {

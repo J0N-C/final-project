@@ -1,23 +1,24 @@
 import React from 'react';
+import CompactCards from './view-compact-recipe';
 
 export default class ViewingRecipes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = [];
+    this.state = { recipes: [] };
   }
 
   componentDidMount() {
-    const user = 1; // USING DUMMY USER 1 REPLACE AT END
-    fetch(`/api/${user}`)
+    fetch('/api/recipes')
       .then(res => res.json())
-      .then(recipes => this.setState([recipes]));
-    // .then(console.log(this.state));
+      .then(result => {
+        this.setState({ recipes: result });
+      });
   }
 
   render() {
     return (
-      <div id="viewing-recipes">
-
+      <div id="recipes-list">
+        <CompactCards recipes={this.state.recipes} />
       </div>
     );
   }
