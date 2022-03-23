@@ -9,7 +9,12 @@ body {
 }
 
 a {
+  color: black;
   text-decoration: none;
+}
+
+a.recipe-card-compact {
+  display: block;
 }
 
 h1,
@@ -26,6 +31,7 @@ h1 {
 h2 {
   font-size: 24pt;
   font-weight: 600;
+  margin-bottom: 0;
 }
 
 h3 {
@@ -45,7 +51,8 @@ h4 {
   margin: 0;
 }
 
-p {
+p,
+li {
   font-weight: 500;
 }
 
@@ -65,12 +72,21 @@ button {
   cursor: pointer;
 }
 
+a:hover {
+  color: black;
+}
+
 button {
   border: none;
   background-color: #f3c892;
   border-radius: 6px;
   padding: 0.25rem;
   font-size: 16pt;
+}
+
+ul {
+  padding-left: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 li {
@@ -81,6 +97,11 @@ i.fa-solid {
   color: black;
   font-size: 32pt;
   margin: 0.5rem;
+}
+
+.full-card-content > p {
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .box-shadow {
@@ -120,7 +141,8 @@ i.fa-solid {
 }
 
 #add-form-container,
-.recipe-card-compact {
+.recipe-card-compact,
+.recipe-card-full {
   margin: 1rem;
   border: 2px solid #f3c892;
   border-radius: 8px;
@@ -128,12 +150,14 @@ i.fa-solid {
 }
 
 #add-form-container,
-.recipe-card-compact:last-child {
+.recipe-card-compact:last-child,
+.recipe-card-full {
   margin-bottom: 5rem;
 }
 
 #add-recipe-form,
-.preview-container {
+.preview-container,
+.full-card-content {
   padding: 0.5rem;
 }
 

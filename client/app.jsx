@@ -26,13 +26,14 @@ export default class App extends React.Component {
 
     if (route.path === '') {
       return <Home/>;
-    } else if (route.path === 'add-recipe') {
-      return <AddRecipe />;
-    } else if (route.path === 'view-recipes') {
-      return <ViewRecipes />;
-    } else {
-      return <h1>404 Page not found!</h1>;
     }
+    if (route.path === 'add-recipe') {
+      return <AddRecipe />;
+    }
+    if (route.path === 'view-recipes') {
+      return <ViewRecipes />;
+    }
+    return <h1>404 Page not found!</h1>;
   }
 
   render() {

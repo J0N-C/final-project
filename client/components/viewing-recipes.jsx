@@ -1,5 +1,6 @@
 import React from 'react';
 import CompactCards from './view-compact-recipe';
+import FullCard from './view-full-recipe';
 
 export default class ViewingRecipes extends React.Component {
   constructor(props) {
@@ -20,9 +21,12 @@ export default class ViewingRecipes extends React.Component {
       <div id="recipes-list">
         {
           this.state.recipes.map(recipe => {
-            return <CompactCards recipe={recipe} key={recipe.recipeId} />;
+            return (
+              <CompactCards recipe={recipe} key={recipe.recipeId} />
+            );
           })
         }
+        <FullCard recipe={this.state.recipes[0]}/>
       </div>
     );
   }

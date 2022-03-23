@@ -12,7 +12,7 @@ export default function CompactCards(props) {
   }
 
   return (
-      <li id={recipe.recipeId} className="recipe-card-compact">
+      <a id={recipe.recipeId} className="recipe-card-compact box-shadow">
         <div className="card-title">
           <h2>{recipe.name}</h2>
         </div>
@@ -21,14 +21,14 @@ export default function CompactCards(props) {
 
           </div>
           <div className="card-preview">
-            <h4>TAGS</h4>
+            <h4>TAGS:</h4>
             <p>{recipe.tags}</p>
-            <h4>SAVED</h4>
+            <h4>SAVED:</h4>
             <p>{checkDate(recipe.saved)}</p>
-            <h4>MADE</h4>
+            <h4>MADE:</h4>
             <p>{checkDate(recipe.made)}</p>
           </div>
         </div>
-      </li>
+      </a>
   );
 }
