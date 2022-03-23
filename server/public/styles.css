@@ -162,11 +162,14 @@ p {
 }
 
 #back-arrow {
+  display: block;
   margin: 0 0.25rem 0 0;
+  max-height: 24pt;
 }
 
 .image-preview {
-  min-width: 40%;
+  min-width: 50%;
+  min-height: 100px;
 }
 
 .card-title {
@@ -175,4 +178,5 @@ p {
   border: 2px #f3c892;
   border-radius: 5px;
   padding-left: 0.25rem;
+  padding-bottom: 0.25rem;
 }
