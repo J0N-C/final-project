@@ -59,8 +59,9 @@ export default function FullRecipe(props) {
           <p>{checkDate(recipe.saved)}</p>
           <h4>EDITED:</h4>
           <p>{checkDate(recipe.edited)}</p>
-          <h4>MADE:</h4>
+          <h4>LAST MADE:</h4>
           <p>{checkDate(recipe.made)}</p>
+          <button>MADE THIS TODAY!</button>
         </div>
       </div>
     </div>

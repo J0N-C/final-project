@@ -14,6 +14,7 @@ export default class AddRecipeForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   handleChange(e) {
@@ -27,6 +28,7 @@ export default class AddRecipeForm extends React.Component {
       recipe: this.state
     };
     this.props.onSubmit(newRecipe);
+    window.location.hash = 'view-recipes';
     this.setState({
       name: '',
       image: '',
@@ -35,6 +37,10 @@ export default class AddRecipeForm extends React.Component {
       notes: '',
       tags: ''
     });
+  }
+
+  cancel() {
+    history.back();
   }
 
   render() {
@@ -55,6 +61,7 @@ export default class AddRecipeForm extends React.Component {
           <label htmlFor="tags">Tags</label>
           <textarea name="tags" id="tags" onChange={this.handleChange} value={this.state.tags} placeholder="Enter optional tags separated by commas, ex: lunch, beef, dairy, gluten" rows="3"/>
           <button type="submit">Add Recipe</button>
+          <button onClick={this.cancel}>Cancel</button>
         </form>
       </div>
     );
