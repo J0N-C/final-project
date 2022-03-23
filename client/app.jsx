@@ -33,6 +33,10 @@ export default class App extends React.Component {
     if (route.path === 'view-recipes') {
       return <ViewRecipes />;
     }
+    if (route.path === 'view-recipe') {
+      const recipeId = parseInt(route.params.get('recipeId'));
+      return <ViewRecipes recipeId={recipeId} />;
+    }
     return <h1>404 Page not found!</h1>;
   }
 

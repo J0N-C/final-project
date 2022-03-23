@@ -99,8 +99,8 @@ i.fa-solid {
   margin: 0.5rem;
 }
 
-.full-card-content > p {
-  margin-left: 1rem;
+p {
+  margin-left: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -159,6 +159,10 @@ i.fa-solid {
 .preview-container,
 .full-card-content {
   padding: 0.5rem;
+}
+
+#back-arrow {
+  margin: 0 0.25rem 0 0;
 }
 
 .image-preview {

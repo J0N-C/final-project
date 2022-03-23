@@ -14,3 +14,7 @@
 .just-even {
   justify-content: space-evenly;
 }
+
+.just-btwn {
+  justify-content: space-between;
+}

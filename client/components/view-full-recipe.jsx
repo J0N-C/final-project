@@ -9,6 +9,10 @@ function splitLines(array) {
   );
 }
 
+const back = () => {
+  history.back();
+};
+
 export default function FullRecipe(props) {
   const recipe = props.recipe;
   if (!recipe) {
@@ -20,11 +24,19 @@ export default function FullRecipe(props) {
   }
   const ingredients = (recipe.ingredients.split('\n'));
   const instructions = (recipe.instructions.split('\n'));
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'auto'
+  });
 
   return (
     <div id={recipe.recipeId} className="recipe-card-full box-shadow">
-      <div className="card-title">
+      <div className="card-title flex just-btwn">
         <h2>{recipe.name}</h2>
+        <a onClick={back}>
+          <i id="back-arrow" className="fa-solid fa-caret-left"></i>
+        </a>
       </div>
       <div className="full-card-content">
         <div className="image-preview">
