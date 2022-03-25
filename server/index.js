@@ -69,26 +69,46 @@ app.post('/api/addrecipe', (req, res, next) => {
     db.query(sql, params)
       .then(result => {
         const [newRecipe] = result.rows;
-        const sql2 = `
+        const tagSelectSql = `
+          select *
+          from "tags"
+          where "name" = ($1)
+        `;
+        const newTag = `
           insert into "tags" ("name")
           values ($1)
           returning *
           `;
+        const updateRecipeTags = `
+          insert into "recipeTags" ("recipeId", "tagId")
+          values ($1, $2)
+          returning *
+          `;
         const params2 = [tags];
-        db.query(sql2, params2)
-          .then(result2 => {
-            const [newTag] = result2.rows;
-            const sql3 = `
-            insert into "recipeTags" ("recipeId", "tagId")
-            values ($1, $2)
-            returning *
-            `;
-            const params3 = [newRecipe.recipeId, newTag.tagId];
-            db.query(sql3, params3)
-              .then(result3 => {
-                res.status(201).json(result3);
-              })
-              .catch(err => next(err));
+        db.query(tagSelectSql, params2)
+          .then(selectedTag => {
+            const [tagResult] = selectedTag.rows;
+            if (tagResult) {
+              const tagId = tagResult.tagId;
+              const updateRecipeTagParams = [newRecipe.recipeId, tagId];
+              db.query(updateRecipeTags, updateRecipeTagParams)
+                .then(result3 => {
+                  res.status(201).json(result3);
+                })
+                .catch(err => next(err));
+            } else {
+              db.query(newTag, params2)
+                .then(result2 => {
+                  const [newTag] = result2.rows;
+                  const newRecipeTagParams = [newRecipe.recipeId, newTag.tagId];
+                  db.query(updateRecipeTags, newRecipeTagParams)
+                    .then(result3 => {
+                      res.status(201).json(result3);
+                    })
+                    .catch(err => next(err));
+                })
+                .catch(err => next(err));
+            }
           })
           .catch(err => next(err));
       })
