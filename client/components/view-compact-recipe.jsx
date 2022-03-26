@@ -22,7 +22,7 @@ export default function CompactCards(props) {
           </div>
           <div className="card-preview">
             <h4>TAGS:</h4>
-            <p>{recipe.tags}</p>
+            <p className="flex wrap">{recipe.tags.join(', ')}</p>
             <h4>SAVED:</h4>
             <p>{checkDate(recipe.saved)}</p>
             <h4>MADE:</h4>

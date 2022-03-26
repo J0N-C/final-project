@@ -71,7 +71,7 @@ app.post('/api/addrecipe', (req, res, next) => {
   return (
     db.query(sql, params)
       .then(result => {
-        const newRecipe = result.rows;
+        const [newRecipe] = result.rows;
         const tagValues = [];
         if (tagCount > 0) {
           for (let i = 1; i <= tagCount; i++) {
@@ -97,7 +97,7 @@ app.post('/api/addrecipe', (req, res, next) => {
                 values ${recipeTagValues}
                 returning *
                 `;
-              const recipeTagParams = [dummyUser].concat(newTags);
+              const recipeTagParams = [newRecipe.recipeId].concat(newTags);
               db.query(updateRecipeTags, recipeTagParams)
                 .then(recipeTagResult => {
                   res.status(201).json(recipeTagResult);
@@ -110,6 +110,20 @@ app.post('/api/addrecipe', (req, res, next) => {
       })
       .catch(err => next(err))
   );
+});
+
+app.put('/api/made-this', (req, res, next) => {
+  const sql = `
+    insert into "recipes" ("lastMade")
+    values ($1, $2, $3, $4, $5)
+    returning *
+    `;
+  const params = [dummyUser];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);

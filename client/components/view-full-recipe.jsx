@@ -13,6 +13,17 @@ const back = () => {
   history.back();
 };
 
+function TaglistFromArray(array) {
+  return (
+    // eslint-disable-next-line array-callback-return
+    array.map((item, i, x) => {
+      if (item) {
+        return <a className='tags' key={i}>{item}</a>;
+      }
+    })
+  );
+}
+
 export default function FullRecipe(props) {
   const recipe = props.recipe;
   if (!recipe) {
@@ -54,7 +65,7 @@ export default function FullRecipe(props) {
           <h4>NOTES:</h4>
           <p>{recipe.notes}</p>
           <h4>TAGS:</h4>
-          <p>{recipe.tags}</p>
+          <p>{TaglistFromArray(recipe.tags)}</p>
           <h4>SAVED:</h4>
           <p>{checkDate(recipe.saved)}</p>
           <h4>EDITED:</h4>

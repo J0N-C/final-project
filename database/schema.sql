@@ -28,9 +28,9 @@ CREATE TABLE "recipes" (
   "ingredients" TEXT NOT NULL,
 	"instructions" TEXT NOT NULL,
 	"notes" TEXT DEFAULT NULL,
-	"saved" TIMESTAMP NOT NULL default now(),
-	"lastMade" TIMESTAMP default null,
-	"lastEdited" TIMESTAMP DEFAULT NULL,
+	"saved" TIMESTAMPTZ NOT NULL default now(),
+	"lastMade" TIMESTAMPTZ default null,
+	"lastEdited" TIMESTAMPTZ DEFAULT NULL,
 	"userId" integer NOT NULL,
 	CONSTRAINT "recipes_pk" PRIMARY KEY ("recipeId")
 ) WITH (
@@ -68,6 +68,7 @@ CREATE TABLE "recipeIngredients" (
 CREATE TABLE "tags" (
 	"tagId" serial NOT NULL,
 	"name" TEXT NOT NULL UNIQUE,
+  "lastUsed" TIMESTAMPTZ not null default now(),
 	CONSTRAINT "tags_pk" PRIMARY KEY ("tagId")
 ) WITH (
   OIDS=FALSE
