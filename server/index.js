@@ -112,13 +112,13 @@ app.post('/api/addrecipe', (req, res, next) => {
   );
 });
 
-app.put('/api/made-this', (req, res, next) => {
+app.put('/api/made-this/:recipeId', (req, res, next) => {
   const sql = `
-    insert into "recipes" ("lastMade")
-    values ($1, $2, $3, $4, $5)
-    returning *
+    update "recipes"
+      set "lastMade" = now()
+    where "recipeId" = ($1)
     `;
-  const params = [dummyUser];
+  const params = [Number(req.params.recipeId)];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);

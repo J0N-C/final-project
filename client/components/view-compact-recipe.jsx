@@ -26,7 +26,7 @@ export default function CompactCards(props) {
             <h4>SAVED:</h4>
             <p>{checkDate(recipe.saved)}</p>
             <h4>MADE:</h4>
-            <p>{checkDate(recipe.made)}</p>
+            <p>{checkDate(recipe.lastMade)}</p>
           </div>
         </div>
       </a>

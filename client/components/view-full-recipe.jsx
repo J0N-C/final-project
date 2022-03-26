@@ -24,6 +24,14 @@ function TaglistFromArray(array) {
   );
 }
 
+function updateMade(recipeId) {
+  const postHeader = [
+    ['Content-Type', 'application/json']
+  ];
+  fetch(`/api/made-this/${recipeId}`, { method: 'PUT', headers: postHeader })
+    .then(res => res.json());
+}
+
 export default function FullRecipe(props) {
   const recipe = props.recipe;
   if (!recipe) {
@@ -71,8 +79,8 @@ export default function FullRecipe(props) {
           <h4>EDITED:</h4>
           <p>{checkDate(recipe.edited)}</p>
           <h4>LAST MADE:</h4>
-          <p>{checkDate(recipe.made)}</p>
-          <button>MADE THIS TODAY!</button>
+          <p>{checkDate(recipe.lastMade)}</p>
+          <button onClick={(() => updateMade(recipe.recipeId))}>MADE THIS TODAY!</button>
         </div>
       </div>
     </div>
