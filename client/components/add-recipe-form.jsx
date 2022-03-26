@@ -10,7 +10,8 @@ export default class AddRecipeForm extends React.Component {
       ingredients: '',
       instructions: '',
       notes: '',
-      tags: ''
+      tags: '',
+      tagCount: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +28,9 @@ export default class AddRecipeForm extends React.Component {
     const newRecipe = {
       recipe: this.state
     };
+    const splitTags = [...new Set(newRecipe.recipe.tags.split(',').map(tag => tag.trim()).filter(Boolean))];
+    newRecipe.recipe.tags = splitTags;
+    newRecipe.recipe.tagCount = splitTags.length;
     this.props.onSubmit(newRecipe);
     window.location.hash = 'view-recipes';
     this.setState({
@@ -35,7 +39,8 @@ export default class AddRecipeForm extends React.Component {
       ingredients: '',
       instructions: '',
       notes: '',
-      tags: ''
+      tags: '',
+      tagCount: 0
     });
   }
 
