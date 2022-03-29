@@ -28,7 +28,7 @@ export default class AddRecipeForm extends React.Component {
     const newRecipe = {
       recipe: this.state
     };
-    const splitTags = [...new Set(newRecipe.recipe.tags.split(',').map(tag => tag.trim()).filter(Boolean))];
+    const splitTags = [...new Set(newRecipe.recipe.tags.toLowerCase().split(',').map(tag => tag.trim()).filter(Boolean))];
     newRecipe.recipe.tags = splitTags;
     newRecipe.recipe.tagCount = splitTags.length;
     this.props.onSubmit(newRecipe);

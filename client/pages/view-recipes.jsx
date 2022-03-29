@@ -20,6 +20,7 @@ class CardViews extends React.Component {
   constructor(props) {
     super(props);
     this.state = { recipes: [] };
+    this.updateMade = this.updateMade.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +28,23 @@ class CardViews extends React.Component {
       .then(res => res.json())
       .then(result => {
         this.setState({ recipes: result });
+      });
+  }
+
+  updateMade(recipeId) {
+    const postHeader = [
+      ['Content-Type', 'application/json']
+    ];
+    fetch(`/api/made-this/${recipeId}`, { method: 'PUT', headers: postHeader })
+      .then(res => res.json())
+      .then(result => {
+        const [updatedRecipe] = result;
+        const recipesList = [...this.state.recipes];
+        const index = recipesList.findIndex(recipe => {
+          return (recipe.recipeId === updatedRecipe.recipeId);
+        });
+        recipesList[index].lastMade = updatedRecipe.lastMade;
+        this.setState({ recipes: recipesList });
       });
   }
 
@@ -48,6 +66,6 @@ class CardViews extends React.Component {
         </div>
       );
     }
-    return <FullCard recipe={this.findRecipe(this.props.recipeId)} />;
+    return <FullCard recipe={this.findRecipe(this.props.recipeId)} updateMade={this.updateMade} />;
   }
 }

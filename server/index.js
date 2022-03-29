@@ -117,11 +117,12 @@ app.put('/api/made-this/:recipeId', (req, res, next) => {
     update "recipes"
       set "lastMade" = now()
     where "recipeId" = ($1)
+    returning *
     `;
   const params = [Number(req.params.recipeId)];
   db.query(sql, params)
     .then(result => {
-      res.json(result.rows);
+      res.status(201).json(result.rows);
     })
     .catch(err => next(err));
 });

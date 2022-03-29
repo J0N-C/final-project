@@ -16,20 +16,12 @@ const back = () => {
 function TaglistFromArray(array) {
   return (
     // eslint-disable-next-line array-callback-return
-    array.map((item, i, x) => {
+    array.map((item, i) => {
       if (item) {
         return <a className='tags' key={i}>{item}</a>;
       }
     })
   );
-}
-
-function updateMade(recipeId) {
-  const postHeader = [
-    ['Content-Type', 'application/json']
-  ];
-  fetch(`/api/made-this/${recipeId}`, { method: 'PUT', headers: postHeader })
-    .then(res => res.json());
 }
 
 export default function FullRecipe(props) {
@@ -80,7 +72,7 @@ export default function FullRecipe(props) {
           <p>{checkDate(recipe.edited)}</p>
           <h4>LAST MADE:</h4>
           <p>{checkDate(recipe.lastMade)}</p>
-          <button onClick={(() => updateMade(recipe.recipeId))}>MADE THIS TODAY!</button>
+          <button onClick={(() => props.updateMade(recipe.recipeId))}>MADE THIS TODAY!</button>
         </div>
       </div>
     </div>
