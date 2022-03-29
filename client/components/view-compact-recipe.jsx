@@ -18,7 +18,7 @@ export default function CompactCards(props) {
         </div>
         <div className="preview-container flex">
           <div className="image-preview">
-
+            <img src={recipe.images[0]} />
           </div>
           <div className="card-preview">
             <h4>TAGS:</h4>

@@ -56,6 +56,11 @@ li {
   font-weight: 500;
 }
 
+img {
+  width: 100%;
+  border-radius: 6px;
+}
+
 input,
 textarea {
   margin-bottom: 1rem;
@@ -86,12 +91,9 @@ button {
 }
 
 ul {
+  margin-left: 0.5rem;
   padding-left: 1rem;
   margin-bottom: 0.5rem;
-}
-
-li {
-  list-style: none;
 }
 
 i.fa-solid {
@@ -168,9 +170,22 @@ p {
   max-height: 24pt;
 }
 
+.card-preview {
+  width: 50%;
+}
+
 .image-preview {
-  min-width: 50%;
+  border-radius: 6rem;
+  width: 50%;
   min-height: 100px;
+  padding: 0.5rem;
+}
+
+.image-full {
+  border-radius: 6rem;
+  width: 100%;
+  min-height: 100px;
+  padding: 0.5rem;
 }
 
 .card-title {

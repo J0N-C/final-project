@@ -3,8 +3,11 @@ import checkDate from './checkdate';
 
 function splitLines(array) {
   return (
+    // eslint-disable-next-line array-callback-return
     array.map((item, i) => {
-      return <li key={i}>{item}</li>;
+      if (item) {
+        return <li key={i}>{item}</li>;
+      }
     })
   );
 }
@@ -35,6 +38,7 @@ export default function FullRecipe(props) {
   }
   const ingredients = (recipe.ingredients.split('\n'));
   const instructions = (recipe.instructions.split('\n'));
+  const notes = (recipe.notes.split('\n'));
   window.scrollTo({
     top: 0,
     left: 0,
@@ -50,8 +54,8 @@ export default function FullRecipe(props) {
         </a>
       </div>
       <div className="full-card-content">
-        <div className="image-preview">
-
+        <div className="image-full">
+          <img src={recipe.images[0]}/>
         </div>
         <div className="full-card-content">
           <h4>INGREDIENTS:</h4>
@@ -63,9 +67,11 @@ export default function FullRecipe(props) {
             {splitLines(instructions)}
           </ul>
           <h4>NOTES:</h4>
-          <p>{recipe.notes}</p>
+          <ul>
+            {splitLines(notes)}
+          </ul>
           <h4>TAGS:</h4>
-          <p>{TaglistFromArray(recipe.tags)}</p>
+          <p className="flex wrap">{TaglistFromArray(recipe.tags)}</p>
           <h4>SAVED:</h4>
           <p>{checkDate(recipe.saved)}</p>
           <h4>EDITED:</h4>
