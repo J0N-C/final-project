@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
 .col-full {
   width: 100%;
 }
@@ -9,4 +13,12 @@
 .flex-col {
   display: flex;
   flex-direction: column;
+}
+
+.just-even {
+  justify-content: space-evenly;
+}
+
+.just-btwn {
+  justify-content: space-between;
 }

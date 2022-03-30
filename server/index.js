@@ -4,6 +4,8 @@ const pg = require('pg');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
+// Testing dummy user 1
+const dummyUser = 1;
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -20,14 +22,44 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
+app.get('/api/recipes', (req, res, next) => {
+  // REPLACE USERID!!! Testing as 1 with dummy user
+  const sql = `
+    select "r"."name",
+      "r"."recipeId",
+      "r"."ingredients",
+      "r"."instructions",
+      "r"."notes",
+      "r"."saved",
+      "r"."lastMade",
+      "r"."lastEdited",
+      array_agg ("pictures"."url") as "images",
+      array_agg ("tags"."name") as "tags"
+    from  "recipes" as "r"
+    left join "recipeTags" using ("recipeId")
+    left join "tags" using ("tagId")
+    left join "pictures" using ("recipeId")
+    where "userId" = $1
+    group by "recipeId"
+    `;
+  const params = [dummyUser];
+  db.query(sql, params)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/addrecipe', (req, res, next) => {
   // REPLACE USERID!!! Testing as 1 with dummy user
   const {
     name,
+    image,
     ingredients,
     instructions,
     notes,
-    tags
+    tags,
+    tagCount
   } = req.body.recipe;
   if (!name || !ingredients || !instructions) {
     throw new ClientError(400, 'name, ingredients, and instructions are required fields');
@@ -38,36 +70,74 @@ app.post('/api/addrecipe', (req, res, next) => {
     returning *
     `;
   // Testing dummy user 1
-  const params = [1, name, ingredients, instructions, notes];
+  const params = [dummyUser, name, ingredients, instructions, notes];
   return (
     db.query(sql, params)
       .then(result => {
         const [newRecipe] = result.rows;
-        const sql2 = `
-          insert into "tags" ("name")
-          values ($1)
-          returning *
-          `;
-        const params2 = [tags];
-        db.query(sql2, params2)
-          .then(result2 => {
-            const [newTag] = result2.rows;
-            const sql3 = `
-            insert into "recipeTags" ("recipeId", "tagId")
-            values ($1, $2)
+        const imageSql = `
+        insert into "pictures" ("recipeId", "url")
+        values ($1, $2)
+        returning *
+        `;
+        const imageParams = [newRecipe.recipeId, image];
+        db.query(imageSql, imageParams)
+          .then(imageResult => {
+            const tagValues = [];
+            if (tagCount > 0) {
+              for (let i = 1; i <= tagCount; i++) {
+                tagValues.push(`($${i})`);
+              }
+              const newTag = `
+            insert into "tags" ("name")
+            values ${tagValues.join(', ')}
+            on conflict ("name")
+            do update set "lastUsed" = now()
             returning *
             `;
-            const params3 = [newRecipe.recipeId, newTag.tagId];
-            db.query(sql3, params3)
-              .then(result3 => {
-                res.status(201).json(result3);
-              })
-              .catch(err => next(err));
+              const params2 = tags;
+              db.query(newTag, params2)
+                .then(tagResult => {
+                  const newTags = tagResult.rows.map(obj => obj.tagId);
+                  const recipeTagValues = [];
+                  for (let i = 2; i <= tagCount + 1; i++) {
+                    recipeTagValues.push(`($1, $${i})`);
+                  }
+                  const updateRecipeTags = `
+                insert into "recipeTags" ("recipeId", "tagId")
+                values ${recipeTagValues}
+                returning *
+                `;
+                  const recipeTagParams = [newRecipe.recipeId].concat(newTags);
+                  db.query(updateRecipeTags, recipeTagParams)
+                    .then(recipeTagResult => {
+                      res.status(201).json(recipeTagResult);
+                    })
+                    .catch(err => next(err));
+                })
+                .catch(err => next(err));
+            }
+            res.status(201).json(newRecipe);
           })
           .catch(err => next(err));
       })
       .catch(err => next(err))
   );
+});
+
+app.put('/api/made-this/:recipeId', (req, res, next) => {
+  const sql = `
+    update "recipes"
+      set "lastMade" = now()
+    where "recipeId" = ($1)
+    returning *
+    `;
+  const params = [Number(req.params.recipeId)];
+  db.query(sql, params)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);

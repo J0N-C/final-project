@@ -10,10 +10,12 @@ export default class AddRecipeForm extends React.Component {
       ingredients: '',
       instructions: '',
       notes: '',
-      tags: ''
+      tags: '',
+      tagCount: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   handleChange(e) {
@@ -26,15 +28,24 @@ export default class AddRecipeForm extends React.Component {
     const newRecipe = {
       recipe: this.state
     };
+    const splitTags = [...new Set(newRecipe.recipe.tags.toLowerCase().split(',').map(tag => tag.trim()).filter(Boolean))];
+    newRecipe.recipe.tags = splitTags;
+    newRecipe.recipe.tagCount = splitTags.length;
     this.props.onSubmit(newRecipe);
+    window.location.hash = 'view-recipes';
     this.setState({
       name: '',
       image: '',
       ingredients: '',
       instructions: '',
       notes: '',
-      tags: ''
+      tags: '',
+      tagCount: 0
     });
+  }
+
+  cancel() {
+    history.back();
   }
 
   render() {
@@ -55,6 +66,7 @@ export default class AddRecipeForm extends React.Component {
           <label htmlFor="tags">Tags</label>
           <textarea name="tags" id="tags" onChange={this.handleChange} value={this.state.tags} placeholder="Enter optional tags separated by commas, ex: lunch, beef, dairy, gluten" rows="3"/>
           <button type="submit">Add Recipe</button>
+          <button onClick={this.cancel}>Cancel</button>
         </form>
       </div>
     );
