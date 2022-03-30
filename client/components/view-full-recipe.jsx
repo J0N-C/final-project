@@ -3,11 +3,10 @@ import checkDate from './checkdate';
 
 function splitLines(array) {
   return (
-    // eslint-disable-next-line array-callback-return
     array.map((item, i) => {
       if (item) {
         return <li key={i}>{item}</li>;
-      }
+      } else return null;
     })
   );
 }
@@ -18,11 +17,10 @@ const back = () => {
 
 function TaglistFromArray(array) {
   return (
-    // eslint-disable-next-line array-callback-return
     array.map((item, i) => {
       if (item) {
         return <a className='tags' key={i}>{item}</a>;
-      }
+      } else return null;
     })
   );
 }
