@@ -58,8 +58,8 @@ CREATE TABLE "ingredients" (
 CREATE TABLE "recipeIngredients" (
 	"recipeId" integer NOT NULL,
 	"ingredientId" integer NOT NULL,
-	"amount" TEXT NOT NULL,
-	"unit" TEXT NOT NULL,
+	"amount" TEXT DEFAULT NULL,
+	"preparation" TEXT DEFAULT NULL,
 	CONSTRAINT "recipeIngredients_pk" PRIMARY KEY ("recipeId","ingredientId")
 ) WITH (
   OIDS=FALSE

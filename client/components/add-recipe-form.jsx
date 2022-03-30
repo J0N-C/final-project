@@ -1,5 +1,6 @@
 import React from 'react';
-// import AddIngredientForm from './add-ingredient-form'; !For future use!
+import AddIngredientForm from './add-ingredient-form';
+import DisplayIngredientsList from './display-ingredients-list';
 
 export default class AddRecipeForm extends React.Component {
   constructor(props) {
@@ -7,27 +8,48 @@ export default class AddRecipeForm extends React.Component {
     this.state = {
       name: '',
       image: '',
-      ingredients: '',
+      ingredients: [],
       instructions: '',
       notes: '',
       tags: '',
-      tagCount: 0
+      tagCount: 0,
+      error: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onIngredientSubmit = this.onIngredientSubmit.bind(this);
     this.cancel = this.cancel.bind(this);
   }
 
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    if (name !== 'ingredients') {
+      this.setState({ [name]: value });
+    }
+  }
+
+  onIngredientSubmit(newIngredient) {
+    const newIngredientList = this.state.ingredients.concat(newIngredient);
+    this.setState({ ingredients: newIngredientList });
+  }
+
+  emptyIngredient() {
+    if (this.state.error) {
+      return <p className="red">{this.state.error}</p>;
+    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    if (this.state.ingredients.length === 0) {
+      return (
+        this.setState({ error: 'Please enter at least 1 ingredient!' })
+      );
+    }
     const newRecipe = {
       recipe: this.state
     };
+    delete newRecipe.error;
     const splitTags = [...new Set(newRecipe.recipe.tags.toLowerCase().split(',').map(tag => tag.trim()).filter(Boolean))];
     newRecipe.recipe.tags = splitTags;
     newRecipe.recipe.tagCount = splitTags.length;
@@ -40,7 +62,8 @@ export default class AddRecipeForm extends React.Component {
       instructions: '',
       notes: '',
       tags: '',
-      tagCount: 0
+      tagCount: 0,
+      error: null
     });
   }
 
@@ -58,13 +81,15 @@ export default class AddRecipeForm extends React.Component {
           <input name="image" id="image" onChange={this.handleChange} type="url" value={this.state.image} placeholder="Optional Recipe Image" />
           {/* Replace in future with separate ingredients list component */}
           <label htmlFor="ingredients">Ingredients</label>
-          <textarea required name="ingredients" id="ingredients" onChange={this.handleChange} value={this.state.ingredients} placeholder="Enter recipe ingredients List" rows="5"/>
+          <DisplayIngredientsList ingredients={this.state.ingredients} />
+          <AddIngredientForm onIngredientSubmit={this.onIngredientSubmit} />
           <label htmlFor="instructions">Instructions</label>
           <textarea required name="instructions" id="instructions" onChange={this.handleChange} value={this.state.instructions} placeholder="Enter recipe instructions List" rows="5"/>
           <label htmlFor="notes">Notes</label>
           <textarea name="notes" id="notes" onChange={this.handleChange} value={this.state.notes} placeholder="Enter optional notes here" rows="3"/>
           <label htmlFor="tags">Tags</label>
           <textarea name="tags" id="tags" onChange={this.handleChange} value={this.state.tags} placeholder="Enter optional tags separated by commas, ex: lunch, beef, dairy, gluten" rows="3"/>
+          {this.emptyIngredient()}
           <button type="submit">Add Recipe</button>
           <button onClick={this.cancel}>Cancel</button>
         </form>
