@@ -27,7 +27,6 @@ app.get('/api/recipes', (req, res, next) => {
   const sql = `
     select "r"."name",
       "r"."recipeId",
-      "r"."ingredients",
       "r"."instructions",
       "r"."notes",
       "r"."saved",
@@ -61,63 +60,101 @@ app.post('/api/addrecipe', (req, res, next) => {
     tags,
     tagCount
   } = req.body.recipe;
-  if (!name || !ingredients || !instructions) {
+  if (!name || ingredients.length < 1 || !instructions) {
     throw new ClientError(400, 'name, ingredients, and instructions are required fields');
   }
   const sql = `
-    insert into "recipes" ("userId", "name", "ingredients", "instructions", "notes")
-    values ($1, $2, $3, $4, $5)
+    insert into "recipes" ("userId", "name", "instructions", "notes")
+    values ($1, $2, $3, $4)
     returning *
     `;
   // Testing dummy user 1
-  const params = [dummyUser, name, ingredients, instructions, notes];
+  const params = [dummyUser, name, instructions, notes];
   return (
     db.query(sql, params)
       .then(result => {
         const [newRecipe] = result.rows;
         const imageSql = `
-        insert into "pictures" ("recipeId", "url")
-        values ($1, $2)
-        returning *
-        `;
+          insert into "pictures" ("recipeId", "url")
+          values ($1, $2)
+          returning *
+          `;
         const imageParams = [newRecipe.recipeId, image];
         db.query(imageSql, imageParams)
-          .then(imageResult => {
-            const tagValues = [];
-            if (tagCount > 0) {
-              for (let i = 1; i <= tagCount; i++) {
-                tagValues.push(`($${i})`);
-              }
-              const newTag = `
-            insert into "tags" ("name")
-            values ${tagValues.join(', ')}
-            on conflict ("name")
-            do update set "lastUsed" = now()
-            returning *
-            `;
-              const params2 = tags;
-              db.query(newTag, params2)
-                .then(tagResult => {
-                  const newTags = tagResult.rows.map(obj => obj.tagId);
-                  const recipeTagValues = [];
-                  for (let i = 2; i <= tagCount + 1; i++) {
-                    recipeTagValues.push(`($1, $${i})`);
-                  }
-                  const updateRecipeTags = `
-                insert into "recipeTags" ("recipeId", "tagId")
-                values ${recipeTagValues}
-                returning *
-                `;
-                  const recipeTagParams = [newRecipe.recipeId].concat(newTags);
-                  db.query(updateRecipeTags, recipeTagParams)
-                    .then(recipeTagResult => {
-                      res.status(201).json(recipeTagResult);
-                    })
-                    .catch(err => next(err));
-                })
-                .catch(err => next(err));
+          .then(imgResult => {
+            const ingredientValues = [];
+            const ingredientNames = [...new Set(ingredients.map(ingredient => {
+              return ingredient.name;
+            }))];
+            for (let i = 1; i <= ingredientNames.length; i++) {
+              ingredientValues.push(`($${i})`);
             }
-            res.status(201).json(newRecipe);
+            const ingredientSql = `
+              insert into "ingredients" ("name")
+              values ${ingredientValues.join(', ')}
+              on conflict ("name")
+              do update set "lastUsed" = now()
+              returning *
+              `;
+            db.query(ingredientSql, ingredientNames)
+              .then(ingredientsResult => {
+                const returnedIngredients = ingredientsResult.rows;
+                const ingredientsWithIds = ingredients.map(ingredient => {
+                  ingredient.ingredientId = returnedIngredients.find(i => i.name === ingredient.name).ingredientId;
+                  return [ingredient.ingredientId, ingredient.amount, ingredient.prep];
+                });
+                const recipeIngredientValues = [];
+                let v = 2;
+                for (let i = 1; i <= ingredientsWithIds.length; i++) {
+                  recipeIngredientValues.push(`($1, $${v}, $${v + 1}, $${v + 2})`);
+                  v += 3;
+                }
+                // 1-2-3-4, 1-5-6-7, 1-8-9-10
+                const recipeIngredientSql = `
+                  insert into "recipeIngredients" ("recipeId", "ingredientId", "amount", "preparation")
+                  values ${recipeIngredientValues}
+                  returning *
+                  `;
+                const riParams = [newRecipe.recipeId].concat(ingredientsWithIds.flat());
+                db.query(recipeIngredientSql, riParams)
+                  .then(riResult => {
+                    const tagValues = [];
+                    if (tagCount > 0) {
+                      for (let i = 1; i <= tagCount; i++) {
+                        tagValues.push(`($${i})`);
+                      }
+                      const newTag = `
+                        insert into "tags" ("name")
+                        values ${tagValues.join(', ')}
+                        on conflict ("name")
+                        do update set "lastUsed" = now()
+                        returning *
+                        `;
+                      const params2 = tags;
+                      db.query(newTag, params2)
+                        .then(tagResult => {
+                          const newTags = tagResult.rows.map(obj => obj.tagId);
+                          const recipeTagValues = [];
+                          for (let i = 2; i <= tagCount + 1; i++) {
+                            recipeTagValues.push(`($1, $${i})`);
+                          }
+                          const updateRecipeTags = `
+                            insert into "recipeTags" ("recipeId", "tagId")
+                            values ${recipeTagValues}
+                            returning *
+                            `;
+                          const recipeTagParams = [newRecipe.recipeId].concat(newTags);
+                          db.query(updateRecipeTags, recipeTagParams)
+                            .then(recipeTagResult => {
+                              res.status(201).json(newRecipe);
+                            })
+                            .catch(err => next(err));
+                        })
+                        .catch(err => next(err));
+                    } else res.status(201).json(newRecipe);
+                  });
+              })
+              .catch(err => next(err));
           })
           .catch(err => next(err));
       })

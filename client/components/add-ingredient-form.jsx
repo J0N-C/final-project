@@ -4,7 +4,7 @@ export default class AddIngredientForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: '',
+      amount: '',
       name: '',
       prep: '',
       error: null
@@ -27,7 +27,7 @@ export default class AddIngredientForm extends React.Component {
       delete newIngredient.error;
       this.props.onIngredientSubmit(newIngredient);
       this.setState({
-        quantity: '',
+        amount: '',
         name: '',
         prep: '',
         error: null
@@ -48,7 +48,7 @@ export default class AddIngredientForm extends React.Component {
       <div className="ingredient-entry-form flex al-center wrap">
         <label htmlFor="ingredient" className="col-full">Add New Ingredient</label>
         <div className="ingredient-inputs">
-          <input name="quantity" id="quantity" onChange={this.handleChange} type="text" value={this.state.quantity} placeholder="Quantity ex: 2 cups" />
+          <input name="amount" id="amount" onChange={this.handleChange} type="text" value={this.state.amount} placeholder="Quantity ex: 2 cups" />
           <input name="name" id="ingredient-name" onChange={this.handleChange} type="text" value={this.state.name} placeholder="Enter ingredient name" />
           {this.emptyIngredient()}
           <input name="prep" id="prep" onChange={this.handleChange} type="text" value={this.state.prep} placeholder="Preparation, ex: diced" />
@@ -60,11 +60,3 @@ export default class AddIngredientForm extends React.Component {
     );
   }
 }
-
-/*
-<label htmlFor="ingredient">Ingredients List</label>
-<input name="quantity" id="quantity" type="text" placeholder="Quantity ex: 2 cups" />
-<input required name="ingredient" id="ingredient" type="text" placeholder="Enter ingredient name" />
-<input name="prep" id="prep" type="text" placeholder="Preparation, ex: diced" />
-<button id="add-ingredient-button">Add Another Ingredient</button>
-*/

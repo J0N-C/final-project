@@ -34,7 +34,6 @@ export default function FullRecipe(props) {
       </>
     );
   }
-  const ingredients = (recipe.ingredients.split('\n'));
   const instructions = (recipe.instructions.split('\n'));
   const notes = (recipe.notes.split('\n'));
   window.scrollTo({
@@ -58,7 +57,7 @@ export default function FullRecipe(props) {
         <div className="full-card-content">
           <h4>INGREDIENTS:</h4>
           <ul>
-            {splitLines(ingredients)}
+            {}
           </ul>
           <h4>INSTRUCTIONS:</h4>
           <ul>
