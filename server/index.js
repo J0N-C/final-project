@@ -32,12 +32,15 @@ app.get('/api/recipes', (req, res, next) => {
       "r"."saved",
       "r"."lastMade",
       "r"."lastEdited",
-      array_agg ("pictures"."url") as "images",
-      array_agg ("tags"."name") as "tags"
+      array_agg (distinct "recipeIngredients"."amount" || ' ' || "ingredients"."name" || ' ' || "recipeIngredients"."preparation") as "ingredients",
+      array_agg (distinct "pictures"."url") as "images",
+      array_agg (distinct "tags"."name") as "tags"
     from  "recipes" as "r"
     left join "recipeTags" using ("recipeId")
     left join "tags" using ("tagId")
     left join "pictures" using ("recipeId")
+    join "recipeIngredients" using ("recipeId")
+    join "ingredients" using ("ingredientId")
     where "userId" = $1
     group by "recipeId"
     `;
@@ -68,7 +71,6 @@ app.post('/api/addrecipe', (req, res, next) => {
     values ($1, $2, $3, $4)
     returning *
     `;
-  // Testing dummy user 1
   const params = [dummyUser, name, instructions, notes];
   return (
     db.query(sql, params)
@@ -109,7 +111,6 @@ app.post('/api/addrecipe', (req, res, next) => {
                   recipeIngredientValues.push(`($1, $${v}, $${v + 1}, $${v + 2})`);
                   v += 3;
                 }
-                // 1-2-3-4, 1-5-6-7, 1-8-9-10
                 const recipeIngredientSql = `
                   insert into "recipeIngredients" ("recipeId", "ingredientId", "amount", "preparation")
                   values ${recipeIngredientValues}
@@ -152,7 +153,8 @@ app.post('/api/addrecipe', (req, res, next) => {
                         })
                         .catch(err => next(err));
                     } else res.status(201).json(newRecipe);
-                  });
+                  })
+                  .catch(err => next(err));
               })
               .catch(err => next(err));
           })

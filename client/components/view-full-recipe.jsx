@@ -25,6 +25,16 @@ function TaglistFromArray(array) {
   );
 }
 
+function ingredientsListFromArray(array) {
+  return (
+    array.map((item, i) => {
+      if (item) {
+        return <li className='ingredient-item' key={i}>{item}</li>;
+      } else return null;
+    })
+  );
+}
+
 export default function FullRecipe(props) {
   const recipe = props.recipe;
   if (!recipe) {
@@ -57,7 +67,7 @@ export default function FullRecipe(props) {
         <div className="full-card-content">
           <h4>INGREDIENTS:</h4>
           <ul>
-            {}
+            {ingredientsListFromArray(recipe.ingredients)}
           </ul>
           <h4>INSTRUCTIONS:</h4>
           <ul>
