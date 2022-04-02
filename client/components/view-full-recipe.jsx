@@ -29,7 +29,7 @@ function ingredientsListFromArray(array) {
   return (
     array.map((item, i) => {
       if (item) {
-        return <li className='ingredient-item' key={i}>{item}</li>;
+        return <li className='ingredient-item' key={i}>{`${item.amount} ${item.name} ${item.prep}`}</li>;
       } else return null;
     })
   );
@@ -61,8 +61,13 @@ export default function FullRecipe(props) {
         </a>
       </div>
       <div className="full-card-content">
-        <div className="image-full">
-          <img src={recipe.images[0]}/>
+        <div className="flex">
+          <div className="image-full">
+            <img src={recipe.images[0]} />
+          </div>
+          <a href={`#edit-recipe?recipeId=${recipe.recipeId}`} className="pos-rel">
+            <i id="edit-recipe" className="fa-solid fa-pen"></i>
+          </a>
         </div>
         <div className="full-card-content">
           <h4>INGREDIENTS:</h4>

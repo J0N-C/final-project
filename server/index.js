@@ -32,7 +32,10 @@ app.get('/api/recipes', (req, res, next) => {
       "r"."saved",
       "r"."lastMade",
       "r"."lastEdited",
-      array_agg (distinct "recipeIngredients"."amount" || ' ' || "ingredients"."name" || ' ' || "recipeIngredients"."preparation") as "ingredients",
+      array_agg (distinct "recipeIngredients"."amount" || ' /ingSplit ' || "ingredients"."name"
+                || ' /ingSplit ' || "recipeIngredients"."preparation" || ' /ingSplit ' ||
+                "recipeIngredients"."ingredientId")
+                as "ingredients",
       array_agg (distinct "pictures"."url") as "images",
       array_agg (distinct "tags"."name") as "tags"
     from  "recipes" as "r"
@@ -47,7 +50,15 @@ app.get('/api/recipes', (req, res, next) => {
   const params = [dummyUser];
   db.query(sql, params)
     .then(result => {
-      res.status(200).json(result.rows);
+      const recipes = [...result.rows];
+      result.rows.forEach(recipe => {
+        const newIngList = recipe.ingredients.map(ingredient => {
+          const ingsArr = ingredient.split(' /ingSplit ');
+          return { amount: ingsArr[0], name: ingsArr[1], prep: ingsArr[2], ingredientId: ingsArr[3] };
+        });
+        recipe.ingredients = newIngList;
+      });
+      res.status(200).json(recipes);
     })
     .catch(err => next(err));
 });
@@ -177,6 +188,22 @@ app.put('/api/made-this/:recipeId', (req, res, next) => {
       res.status(201).json(result.rows);
     })
     .catch(err => next(err));
+});
+
+app.put('/api/editrecipe', (req, res, next) => {
+  // console.log(req.body);
+  /* const sql = `
+    update "recipes"
+      set "lastMade" = now()
+    where "recipeId" = ($1)
+    returning *
+    `;
+  const params = [Number(req.params.recipeId)];
+  db.query(sql, params)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+    .catch(err => next(err)); */
 });
 
 app.use(errorMiddleware);

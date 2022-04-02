@@ -26,3 +26,7 @@
 .al-center {
   align-items: center;
 }
+
+.pos-rel {
+  position: relative;
+}

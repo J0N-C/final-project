@@ -4,16 +4,26 @@ import SubHeader from '../components/sub-header';
 import Navbar from '../components/navbar';
 import CompactCards from '../components/view-compact-recipe';
 import FullCard from '../components/view-full-recipe';
+import AddRecipeForm from '../components/add-recipe-form';
 
 export default function ViewRecipes(props) {
   return (
     <>
       <MainHeader />
       <SubHeader />
-      <CardViews recipeId={props.recipeId} />
+      <CardViews recipeId={props.recipeId} editing={props.editing}/>
       <Navbar />
     </>
   );
+}
+
+function editRecipe(editedRecipe) {
+  const updateRecipe = JSON.stringify(editedRecipe);
+  const postHeader = [
+    ['Content-Type', 'application/json']
+  ];
+  fetch('/api/editrecipe', { method: 'PUT', headers: postHeader, body: updateRecipe })
+    .then(res => res.json());
 }
 
 class CardViews extends React.Component {
@@ -65,6 +75,9 @@ class CardViews extends React.Component {
           }
         </div>
       );
+    }
+    if (this.props.editing) {
+      return <AddRecipeForm editing={this.findRecipe(this.props.recipeId)} onSubmit={editRecipe} />;
     }
     return <FullCard recipe={this.findRecipe(this.props.recipeId)} updateMade={this.updateMade} />;
   }

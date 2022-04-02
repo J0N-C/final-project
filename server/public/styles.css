@@ -107,6 +107,10 @@ p {
   margin-bottom: 0.5rem;
 }
 
+li > p {
+  margin: 0;
+}
+
 .box-shadow {
   box-shadow: 0 0 14px 4px #00000025;
 }
@@ -169,10 +173,16 @@ p {
   padding: 0.5rem;
 }
 
+#edit-recipe {
+  display: block;
+  margin: 0 0.25rem 0 0;
+  font-size: 1.5rem;
+}
+
 #back-arrow {
   display: block;
   margin: 0 0.25rem 0 0;
-  max-height: 24pt;
+  max-height: 1rem;
 }
 
 .card-preview {
@@ -188,7 +198,8 @@ p {
 
 .image-full {
   border-radius: 6rem;
-  width: 100%;
+  width: 75%;
+  margin: 0 auto;
   min-height: 100px;
   padding: 0.5rem;
 }
@@ -225,6 +236,11 @@ p {
   border-radius: 5px;
   padding-left: 0.25rem;
   padding-bottom: 0.25rem;
+}
+
+i.fa-circle-xmark {
+  font-size: 1rem;
+  color: gray;
 }
 
 .tags {
