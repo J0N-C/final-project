@@ -191,19 +191,130 @@ app.put('/api/made-this/:recipeId', (req, res, next) => {
 });
 
 app.put('/api/editrecipe', (req, res, next) => {
-  // console.log(req.body);
-  /* const sql = `
-    update "recipes"
-      set "lastMade" = now()
-    where "recipeId" = ($1)
-    returning *
+  const {
+    recipeId,
+    name,
+    image,
+    ingredients,
+    instructions,
+    notes,
+    tags,
+    tagCount
+  } = req.body.recipe;
+  const resetIng = `
+    delete from "recipeIngredients"
+    where "recipeId" = ${recipeId}
     `;
-  const params = [Number(req.params.recipeId)];
-  db.query(sql, params)
+  db.query(resetIng)
     .then(result => {
-      res.status(201).json(result.rows);
+      const ingredientValues = [];
+      const ingredientNames = [...new Set(ingredients.map(ingredient => {
+        return ingredient.name;
+      }))];
+      for (let i = 1; i <= ingredientNames.length; i++) {
+        ingredientValues.push(`($${i})`);
+      }
+      const ingredientSql = `
+        insert into "ingredients" ("name")
+        values ${ingredientValues.join(', ')}
+        on conflict ("name")
+        do update set "lastUsed" = now()
+        returning *
+        `;
+      db.query(ingredientSql, ingredientNames)
+        .then(ingredientsResult => {
+          const returnedIngredients = ingredientsResult.rows;
+          const ingredientsWithIds = ingredients.map(ingredient => {
+            ingredient.ingredientId = returnedIngredients.find(i => i.name === ingredient.name).ingredientId;
+            return [ingredient.ingredientId, ingredient.amount, ingredient.prep];
+          });
+          const recipeIngredientValues = [];
+          let v = 2;
+          for (let i = 1; i <= ingredientsWithIds.length; i++) {
+            recipeIngredientValues.push(`($1, $${v}, $${v + 1}, $${v + 2})`);
+            v += 3;
+          }
+          const recipeIngredientSql = `
+            insert into "recipeIngredients" ("recipeId", "ingredientId", "amount", "preparation")
+            values ${recipeIngredientValues}
+            returning *
+            `;
+          const riParams = [recipeId].concat(ingredientsWithIds.flat());
+          db.query(recipeIngredientSql, riParams)
+            .then(riResult => {
+              const updateSql = `
+                update "recipes"
+                   set "name" = ($1),
+                        "instructions" = ($2),
+                        "notes" = ($3),
+                        "lastEdited" = now()
+                where "recipeId" = ${recipeId}
+                returning *
+                `;
+              const updateParams = [name, instructions, notes];
+              db.query(updateSql, updateParams)
+                .then(updateResult => {
+                  const imageSql = `
+                    update "pictures"
+                       set "url" = ($1)
+                    where "recipeId" = ${recipeId}
+                    returning *
+                    `;
+                  const imageParams = [image];
+                  db.query(imageSql, imageParams)
+                    .then(imageUpdateResult => {
+                      const resetTags = `
+                        delete from "recipeTags"
+                        where "recipeId" = ${recipeId}
+                        `;
+                      db.query(resetTags)
+                        .then(tagResetResult => {
+                          const tagValues = [];
+                          if (tagCount > 0 && tags[0]) {
+                            for (let i = 1; i <= tagCount; i++) {
+                              tagValues.push(`($${i})`);
+                            }
+                            const newTag = `
+                              insert into "tags" ("name")
+                              values ${tagValues.join(', ')}
+                              on conflict ("name")
+                              do update set "lastUsed" = now()
+                              returning *
+                              `;
+                            const params2 = tags;
+                            db.query(newTag, params2)
+                              .then(tagResult => {
+                                const newTags = tagResult.rows.map(obj => obj.tagId);
+                                const recipeTagValues = [];
+                                for (let i = 2; i <= tagCount + 1; i++) {
+                                  recipeTagValues.push(`($1, $${i})`);
+                                }
+                                const updateRecipeTags = `
+                                  insert into "recipeTags" ("recipeId", "tagId")
+                                  values ${recipeTagValues}
+                                  returning *
+                                  `;
+                                const recipeTagParams = [recipeId].concat(newTags);
+                                db.query(updateRecipeTags, recipeTagParams)
+                                  .then(recipeTagResult => {
+                                    res.status(201).json(updateResult);
+                                  })
+                                  .catch(err => next(err));
+                              })
+                              .catch(err => next(err));
+                          } else res.status(201).json(updateResult);
+                        })
+                        .catch(err => next(err));
+                    })
+                    .catch(err => next(err));
+                })
+                .catch(err => next(err));
+            })
+            .catch(err => next(err));
+        })
+        .catch(err => next(err));
     })
-    .catch(err => next(err)); */
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);

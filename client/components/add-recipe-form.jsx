@@ -17,6 +17,7 @@ export default class AddRecipeForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteIngredient = this.deleteIngredient.bind(this);
     this.onIngredientSubmit = this.onIngredientSubmit.bind(this);
     this.cancel = this.cancel.bind(this);
   }
@@ -29,9 +30,10 @@ export default class AddRecipeForm extends React.Component {
         name: editR.name,
         image: editR.images[0],
         ingredients: editR.ingredients,
+        deleteIngredient: [],
         instructions: editR.instructions,
         notes: editR.notes,
-        tags: editR.tags,
+        tags: editR.tags.join(', '),
         tagCount: editR.tags.length,
         error: null
       });
@@ -57,7 +59,10 @@ export default class AddRecipeForm extends React.Component {
   }
 
   deleteIngredient(e) {
-    // console.log(e.target);
+    const i = parseInt(e.currentTarget.parentElement.getAttribute('data-ri'));
+    const newIList = [...this.state.ingredients];
+    newIList.splice(i, 1);
+    this.setState({ ingredients: newIList });
   }
 
   handleSubmit(e) {
@@ -95,7 +100,6 @@ export default class AddRecipeForm extends React.Component {
   }
 
   render() {
-
     let buttonName;
     if (this.state.recipeId) {
       buttonName = 'Finish Editing';
@@ -110,6 +114,7 @@ export default class AddRecipeForm extends React.Component {
           {/* Replace in future with separate ingredients list component */}
           <label htmlFor="ingredients">Ingredients</label>
           <DisplayIngredientsList ingredients={this.state.ingredients} delete={this.deleteIngredient} />
+          {this.emptyIngredient()}
           <AddIngredientForm onIngredientSubmit={this.onIngredientSubmit} />
           <label htmlFor="instructions">Instructions</label>
           <textarea required name="instructions" id="instructions" onChange={this.handleChange} value={this.state.instructions} placeholder="Enter recipe instructions List" rows="5"/>

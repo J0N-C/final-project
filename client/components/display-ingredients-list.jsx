@@ -8,9 +8,9 @@ export default function DisplayIngredientsList(props) {
         {
           ingredientsList.map((ingredient, i) => {
             return (
-              <li className="flex just-btwn" key={i}>
+              <li className="flex just-btwn" key={i} data-ri={i}>
                 <p>{`${ingredient.amount} ${ingredient.name} ${ingredient.prep}`}</p>
-                <a onClick={props.delete}><i className="fa-solid fa-circle-xmark"></i></a>
+                <a onClick={props.delete}><i className="fa-solid fa-circle-xmark gray-icon"></i></a>
               </li>
             );
           })

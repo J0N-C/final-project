@@ -87,7 +87,7 @@ export default function FullRecipe(props) {
           <h4>SAVED:</h4>
           <p>{checkDate(recipe.saved)}</p>
           <h4>EDITED:</h4>
-          <p>{checkDate(recipe.edited)}</p>
+          <p>{checkDate(recipe.lastEdited)}</p>
           <h4>LAST MADE:</h4>
           <p>{checkDate(recipe.lastMade)}</p>
           <button onClick={(() => props.updateMade(recipe.recipeId))}>MADE THIS TODAY!</button>
