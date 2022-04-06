@@ -65,7 +65,7 @@ export default function FullRecipe(props) {
           <div className="image-full">
             <img src={recipe.images[0]} />
           </div>
-          <a href={`#edit-recipe?recipeId=${recipe.recipeId}`} className="pos-rel">
+          <a href={`#edit-recipe?recipeId=${recipe.recipeId}`}>
             <i id="edit-recipe" className="fa-solid fa-pen"></i>
           </a>
         </div>

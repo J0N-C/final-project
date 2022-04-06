@@ -16,21 +16,12 @@ export default function ViewRecipes(props) {
     </>
   );
 }
-
-function editRecipe(editedRecipe) {
-  const updateRecipe = JSON.stringify(editedRecipe);
-  const postHeader = [
-    ['Content-Type', 'application/json']
-  ];
-  fetch('/api/editrecipe', { method: 'PUT', headers: postHeader, body: updateRecipe })
-    .then(res => res.json());
-}
-
 class CardViews extends React.Component {
   constructor(props) {
     super(props);
     this.state = { recipes: [] };
     this.updateMade = this.updateMade.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +29,24 @@ class CardViews extends React.Component {
       .then(res => res.json())
       .then(result => {
         this.setState({ recipes: result });
+      });
+  }
+
+  editRecipe(editedRecipe) {
+    const updateRecipe = JSON.stringify(editedRecipe);
+    const postHeader = [
+      ['Content-Type', 'application/json']
+    ];
+    fetch('/api/editrecipe', { method: 'PUT', headers: postHeader, body: updateRecipe })
+      .then(res => res.json())
+      .then(result => {
+        const updatedRecipe = result;
+        const recipesList = [...this.state.recipes];
+        const index = recipesList.findIndex(recipe => {
+          return (recipe.recipeId === updatedRecipe.recipeId);
+        });
+        recipesList[index] = updatedRecipe;
+        this.setState({ recipes: recipesList });
       });
   }
 
@@ -77,7 +86,7 @@ class CardViews extends React.Component {
       );
     }
     if (this.props.editing) {
-      return <AddRecipeForm editing={this.findRecipe(this.props.recipeId)} onSubmit={editRecipe} />;
+      return <AddRecipeForm editing={this.findRecipe(this.props.recipeId)} onSubmit={this.editRecipe} />;
     }
     return <FullCard recipe={this.findRecipe(this.props.recipeId)} updateMade={this.updateMade} />;
   }

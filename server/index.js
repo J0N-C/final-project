@@ -254,6 +254,10 @@ app.put('/api/editrecipe', (req, res, next) => {
               const updateParams = [name, instructions, notes];
               db.query(updateSql, updateParams)
                 .then(updateResult => {
+                  const [updatedRecipe] = updateResult.rows;
+                  updatedRecipe.ingredients = [...ingredients];
+                  updatedRecipe.images = [image];
+                  updatedRecipe.tags = [...tags];
                   const imageSql = `
                     update "pictures"
                        set "url" = ($1)
@@ -297,12 +301,12 @@ app.put('/api/editrecipe', (req, res, next) => {
                                 const recipeTagParams = [recipeId].concat(newTags);
                                 db.query(updateRecipeTags, recipeTagParams)
                                   .then(recipeTagResult => {
-                                    res.status(201).json(updateResult);
+                                    res.status(201).json(updatedRecipe);
                                   })
                                   .catch(err => next(err));
                               })
                               .catch(err => next(err));
-                          } else res.status(201).json(updateResult);
+                          } else res.status(201).json(updatedRecipe);
                         })
                         .catch(err => next(err));
                     })
