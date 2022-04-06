@@ -25,7 +25,6 @@ CREATE TABLE "recipes" (
 	"recipeId" serial NOT NULL,
 	"name" TEXT NOT NULL,
   -- DELETE INGREDIENTS COLUMN AND REPLACE IN FUTURE, THIS IS FOR TEMP TESTING
-  "ingredients" TEXT NOT NULL,
 	"instructions" TEXT NOT NULL,
 	"notes" TEXT DEFAULT NULL,
 	"saved" TIMESTAMPTZ NOT NULL default now(),
@@ -48,8 +47,8 @@ CREATE TABLE "pictures" (
 
 CREATE TABLE "ingredients" (
 	"ingredientId" serial NOT NULL,
-	"name" TEXT NOT NULL,
-	"description" TEXT NOT NULL,
+	"name" TEXT NOT NULL UNIQUE,
+	"lastUsed" TIMESTAMPTZ not null default now(),
 	CONSTRAINT "ingredients_pk" PRIMARY KEY ("ingredientId")
 ) WITH (
   OIDS=FALSE
@@ -58,8 +57,8 @@ CREATE TABLE "ingredients" (
 CREATE TABLE "recipeIngredients" (
 	"recipeId" integer NOT NULL,
 	"ingredientId" integer NOT NULL,
-	"amount" TEXT NOT NULL,
-	"unit" TEXT NOT NULL,
+	"amount" TEXT DEFAULT NULL,
+	"preparation" TEXT DEFAULT NULL,
 	CONSTRAINT "recipeIngredients_pk" PRIMARY KEY ("recipeId","ingredientId")
 ) WITH (
   OIDS=FALSE

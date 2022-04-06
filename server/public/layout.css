@@ -22,3 +22,11 @@
 .just-btwn {
   justify-content: space-between;
 }
+
+.al-center {
+  align-items: center;
+}
+
+.pos-rel {
+  position: relative;
+}

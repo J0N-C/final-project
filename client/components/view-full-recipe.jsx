@@ -25,6 +25,16 @@ function TaglistFromArray(array) {
   );
 }
 
+function ingredientsListFromArray(array) {
+  return (
+    array.map((item, i) => {
+      if (item) {
+        return <li className='ingredient-item' key={i}>{`${item.amount} ${item.name} ${item.prep}`}</li>;
+      } else return null;
+    })
+  );
+}
+
 export default function FullRecipe(props) {
   const recipe = props.recipe;
   if (!recipe) {
@@ -34,7 +44,6 @@ export default function FullRecipe(props) {
       </>
     );
   }
-  const ingredients = (recipe.ingredients.split('\n'));
   const instructions = (recipe.instructions.split('\n'));
   const notes = (recipe.notes.split('\n'));
   window.scrollTo({
@@ -52,13 +61,18 @@ export default function FullRecipe(props) {
         </a>
       </div>
       <div className="full-card-content">
-        <div className="image-full">
-          <img src={recipe.images[0]}/>
+        <div className="flex">
+          <div className="image-full">
+            <img src={recipe.images[0]} />
+          </div>
+          <a href={`#edit-recipe?recipeId=${recipe.recipeId}`}>
+            <i id="edit-recipe" className="fa-solid fa-pen"></i>
+          </a>
         </div>
         <div className="full-card-content">
           <h4>INGREDIENTS:</h4>
           <ul>
-            {splitLines(ingredients)}
+            {ingredientsListFromArray(recipe.ingredients)}
           </ul>
           <h4>INSTRUCTIONS:</h4>
           <ul>
@@ -73,7 +87,7 @@ export default function FullRecipe(props) {
           <h4>SAVED:</h4>
           <p>{checkDate(recipe.saved)}</p>
           <h4>EDITED:</h4>
-          <p>{checkDate(recipe.edited)}</p>
+          <p>{checkDate(recipe.lastEdited)}</p>
           <h4>LAST MADE:</h4>
           <p>{checkDate(recipe.lastMade)}</p>
           <button onClick={(() => props.updateMade(recipe.recipeId))}>MADE THIS TODAY!</button>
