@@ -48,6 +48,9 @@ export default class AddRecipeForm extends React.Component {
   }
 
   onIngredientSubmit(newIngredient) {
+    if (this.state.ingredients.find(ingredient => ingredient.name === newIngredient.name)) {
+      return this.setState({ error: 'Duplicate ingredients not allowed!' });
+    }
     const newIngredientList = this.state.ingredients.concat(newIngredient);
     this.setState({ ingredients: newIngredientList });
   }
