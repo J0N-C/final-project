@@ -53,46 +53,60 @@ export default function FullRecipe(props) {
   });
 
   return (
-    <div id={recipe.recipeId} className="recipe-card-full box-shadow">
-      <div className="card-title flex just-btwn">
-        <h2>{recipe.name}</h2>
-        <a onClick={back}>
-          <i id="back-arrow" className="fa-solid fa-caret-left"></i>
-        </a>
+    <>
+      <div className="dark-overlay flex-col just-cent">
+        <div className="delete-popup flex-col">
+          <p className="text-center">ARE YOU SURE YOU WANT TO DELETE RECIPE FOR: <span className="bold">{recipe.name.toUpperCase()}</span>?</p>
+          <button className="confirm-delete">CONFIRM</button>
+          <button className="close-delete">CANCEL</button>
+        </div>
       </div>
-      <div className="full-card-content">
-        <div className="flex">
-          <div className="image-full">
-            <img src={recipe.images[0]} />
-          </div>
-          <a href={`#edit-recipe?recipeId=${recipe.recipeId}`}>
-            <i id="edit-recipe" className="fa-solid fa-pen"></i>
+      <div id={recipe.recipeId} className="recipe-card-full box-shadow">
+        <div className="card-title flex just-btwn">
+          <h2>{recipe.name}</h2>
+          <a onClick={back}>
+            <i id="back-arrow" className="fa-solid fa-caret-left"></i>
           </a>
         </div>
         <div className="full-card-content">
-          <h4>INGREDIENTS:</h4>
-          <ul>
-            {ingredientsListFromArray(recipe.ingredients)}
-          </ul>
-          <h4>INSTRUCTIONS:</h4>
-          <ul>
-            {splitLines(instructions)}
-          </ul>
-          <h4>NOTES:</h4>
-          <ul>
-            {splitLines(notes)}
-          </ul>
-          <h4>TAGS:</h4>
-          <p className="flex wrap">{TaglistFromArray(recipe.tags)}</p>
-          <h4>SAVED:</h4>
-          <p>{checkDate(recipe.saved)}</p>
-          <h4>EDITED:</h4>
-          <p>{checkDate(recipe.lastEdited)}</p>
-          <h4>LAST MADE:</h4>
-          <p>{checkDate(recipe.lastMade)}</p>
-          <button onClick={(() => props.updateMade(recipe.recipeId))}>MADE THIS TODAY!</button>
+          <div className="flex">
+            <div className="image-full">
+              <img src={recipe.images[0]} />
+            </div>
+            <a href={`#edit-recipe?recipeId=${recipe.recipeId}`}>
+              <i id="edit-recipe" className="fa-solid fa-pen"></i>
+            </a>
+          </div>
+          <div className="full-card-content">
+            <h4>INGREDIENTS:</h4>
+            <ul>
+              {ingredientsListFromArray(recipe.ingredients)}
+            </ul>
+            <h4>INSTRUCTIONS:</h4>
+            <ul>
+              {splitLines(instructions)}
+            </ul>
+            <h4>NOTES:</h4>
+            <ul>
+              {splitLines(notes)}
+            </ul>
+            <h4>TAGS:</h4>
+            <p className="flex wrap">{TaglistFromArray(recipe.tags)}</p>
+            <h4>SAVED:</h4>
+            <p>{checkDate(recipe.saved)}</p>
+            <h4>EDITED:</h4>
+            <p>{checkDate(recipe.lastEdited)}</p>
+            <h4>LAST MADE:</h4>
+            <p>{checkDate(recipe.lastMade)}</p>
+            <button onClick={(() => props.updateMade(recipe.recipeId))}>MADE THIS TODAY!</button>
+            <div className="flex flex-end">
+              <a>
+                <i id="delete-recipe" className="fa-solid fa-trash-can"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

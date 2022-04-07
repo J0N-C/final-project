@@ -4,6 +4,10 @@
   font-size: 14pt;
 }
 
+.hidden {
+  display: none !important;
+}
+
 body {
   background-color: #f0f0f0;
 }
@@ -154,7 +158,8 @@ li > p {
 
 #add-form-container,
 .recipe-card-compact,
-.recipe-card-full {
+.recipe-card-full,
+.delete-popup {
   margin: 1rem;
   border: 2px solid #f3c892;
   border-radius: 8px;
@@ -169,7 +174,8 @@ li > p {
 
 #add-recipe-form,
 .preview-container,
-.full-card-content {
+.full-card-content,
+.delete-popup {
   padding: 0.5rem;
 }
 
@@ -183,6 +189,11 @@ li > p {
   display: block;
   margin: 0 0.25rem 0 0;
   max-height: 1rem;
+}
+
+#delete-recipe {
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 .card-preview {
@@ -224,6 +235,21 @@ li > p {
   width: 100%;
 }
 
+.ingredient-preview:hover {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.308);
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
 .submit-new-ingredient {
   margin: 0 0 0 0.25rem;
   padding: 0 0.25rem;
@@ -250,4 +276,8 @@ i.gray-icon {
   font-weight: 500;
   background-color: #f0f0f0;
   border-radius: 8px;
+}
+
+.text-center {
+  margin: 0 0.5;
 }

@@ -321,6 +321,43 @@ app.put('/api/editrecipe', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/delete-recipe/:recipeId', (req, res, next) => {
+  const recipeId = Number(req.params.recipeId);
+  const deleteRecipeIngSql = `
+    delete from "recipeIngredients"
+    where "recipeId" = ${recipeId}
+    `;
+  const params = [recipeId];
+  db.query(deleteRecipeIngSql, params)
+    .then(result1 => {
+      const deleteTagSql = `
+        delete from "recipeTags"
+        where "recipeId" = ${recipeId}
+        `;
+      db.query(deleteTagSql, params)
+        .then(result2 => {
+          const deleteImgSql = `
+          delete from "pictures"
+          where "recipeId" = ${recipeId}
+          `;
+          db.query(deleteImgSql, params)
+            .then(result3 => {
+              const deleteRecipeSql = `
+            delete from "recipes"
+            where "recipeId" = ${recipeId}
+            `;
+              db.query(deleteRecipeSql, params)
+                .then(result4 => {
+                  res.status(204);
+                });
+            })
+            .catch(err => next(err));
+        })
+        .catch(err => next(err));
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
