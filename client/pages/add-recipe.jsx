@@ -3,6 +3,7 @@ import AddRecipeForm from '../components/add-recipe-form';
 import MainHeader from '../components/main-header';
 import SubHeader from '../components/sub-header';
 import Navbar from '../components/navbar';
+import { parseRoute } from '../lib';
 
 function newRecipe(newRecipe) {
   const addedRecipe = JSON.stringify(newRecipe);
@@ -18,7 +19,7 @@ export default function AddRecipe(props) {
   return (
     <>
       <MainHeader />
-      <SubHeader />
+      <SubHeader location={parseRoute(location.hash)} />
       <AddRecipeForm onSubmit={newRecipe} />
       <Navbar />
     </>
