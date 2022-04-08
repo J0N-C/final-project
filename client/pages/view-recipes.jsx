@@ -22,6 +22,7 @@ class CardViews extends React.Component {
     this.state = { recipes: [] };
     this.updateMade = this.updateMade.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
+    this.deleteRecipe = this.deleteRecipe.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +68,23 @@ class CardViews extends React.Component {
       });
   }
 
+  deleteRecipe(recipeId) {
+    const postHeader = [
+      ['Content-Type', 'application/json']
+    ];
+    fetch(`/api/delete-recipe/${recipeId}`, { method: 'DELETE', headers: postHeader })
+      .then(res => res.json())
+      .then(result => {
+        const recipesList = [...this.state.recipes];
+        const index = recipesList.findIndex(recipe => {
+          return (recipe.recipeId === result.deleted);
+        });
+        recipesList.splice(index, 1);
+        this.setState({ recipes: recipesList });
+        window.location.hash = 'view-recipes';
+      });
+  }
+
   findRecipe(id) {
     return this.state.recipes.find(recipe => (recipe.recipeId === id));
   }
@@ -88,6 +106,6 @@ class CardViews extends React.Component {
     if (this.props.editing) {
       return <AddRecipeForm editing={this.findRecipe(this.props.recipeId)} onSubmit={this.editRecipe} />;
     }
-    return <FullCard recipe={this.findRecipe(this.props.recipeId)} updateMade={this.updateMade} />;
+    return <FullCard recipe={this.findRecipe(this.props.recipeId)} updateMade={this.updateMade} delete={this.deleteRecipe}/>;
   }
 }
