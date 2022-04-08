@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import checkDate from './checkdate';
 
 function splitLines(array) {
@@ -35,6 +35,22 @@ function ingredientsListFromArray(array) {
   );
 }
 
+function DeleteConfirmation(props) {
+  if (props.deletePopup) {
+    return (
+      <div className="dark-overlay flex-col just-cent">
+        <div className="delete-popup flex-col">
+          <p className="text-center">ARE YOU SURE YOU WANT TO DELETE RECIPE FOR: <span className="bold">{props.recipeName.toUpperCase()}</span>?</p>
+          <button onClick={props.delete} className="confirm-delete">CONFIRM</button>
+          <button onClick={props.cancel} className="close-delete">CANCEL</button>
+        </div>
+      </div>
+    );
+  } else {
+    return <></>;
+  }
+}
+
 export default function FullRecipe(props) {
   const recipe = props.recipe;
   if (!recipe) {
@@ -51,16 +67,10 @@ export default function FullRecipe(props) {
     left: 0,
     behavior: 'auto'
   });
-
+  const [deletePopup, setDeletePopup] = useState(false);
   return (
     <>
-      <div className="dark-overlay flex-col just-cent">
-        <div className="delete-popup flex-col">
-          <p className="text-center">ARE YOU SURE YOU WANT TO DELETE RECIPE FOR: <span className="bold">{recipe.name.toUpperCase()}</span>?</p>
-          <button className="confirm-delete">CONFIRM</button>
-          <button className="close-delete">CANCEL</button>
-        </div>
-      </div>
+      <DeleteConfirmation recipeName={recipe.name} deletePopup={deletePopup} delete={() => { props.delete(recipe.recipeId); }} cancel={() => { setDeletePopup(false); }}/>
       <div id={recipe.recipeId} className="recipe-card-full box-shadow">
         <div className="card-title flex just-btwn">
           <h2>{recipe.name}</h2>
@@ -100,7 +110,7 @@ export default function FullRecipe(props) {
             <p>{checkDate(recipe.lastMade)}</p>
             <button onClick={(() => props.updateMade(recipe.recipeId))}>MADE THIS TODAY!</button>
             <div className="flex flex-end">
-              <a>
+              <a onClick={() => { setDeletePopup(true); }}>
                 <i id="delete-recipe" className="fa-solid fa-trash-can"></i>
               </a>
             </div>
