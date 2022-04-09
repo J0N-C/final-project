@@ -60,13 +60,11 @@ class CardViews extends React.Component {
       sortedArray.sort((a, b) => {
         const nameA = a.name.toUpperCase();
         const nameB = b.name.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
+        return nameA < nameB
+          ? -1
+          : nameA > nameB
+            ? 1
+            : 0;
       });
     }
     this.setState({ recipes: sortedArray });
