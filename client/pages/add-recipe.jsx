@@ -18,8 +18,8 @@ export default function AddRecipe(props) {
 
   return (
     <>
-      <MainHeader />
-      <SubHeader location={parseRoute(location.hash)} />
+      <MainHeader location={parseRoute(location.hash)} />
+      <SubHeader />
       <AddRecipeForm onSubmit={newRecipe} />
       <Navbar />
     </>

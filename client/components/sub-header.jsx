@@ -1,29 +1,25 @@
 import React from 'react';
+import { parseRoute } from '../lib';
 
 export default function SubHeader(props) {
-  let title = 'WHAT\'S COOKING TODAY?';
-  if (props.location) {
-    const loc = props.location.path;
-    switch (loc) {
-      case 'add-recipe':
-        title = 'ADDING NEW RECIPE CARD';
-        break;
-      case 'view-recipes':
-        title = 'VIEWING RECIPE CARDS';
-        break;
-      case 'view-recipe':
-        title = 'VIEWING CARD';
-        break;
-      case 'edit-recipe':
-        title = 'EDITING RECIPE CARD';
-        break;
-    }
+  if (parseRoute(location.hash).path === 'view-recipes') {
+    return (
+      <>
+        <div id="sub-header-bot">
+          <label htmlFor="sort-view"></label>
+          <select name="sort-view" id="sort-view" defaultValue='new' onChange={props.sortMethod}>
+            <option value="new">DATE SAVED (NEWEST)</option>
+            <option value="old" >DATE SAVED (OLDEST)</option>
+            <option value="made-new" >LAST MADE (NEWEST)</option>
+            <option value="made-old" >LAST MADE (OLDEST)</option>
+            <option value="a-z" >NAME (A-Z)</option>
+          </select>
+        </div>
+      </>
+    );
   }
   return (
     <>
-      <div id="sub-header-top">
-        <h3>{title}</h3>
-      </div>
       <div id="sub-header-bot">
 
       </div>

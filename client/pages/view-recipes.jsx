@@ -10,28 +10,66 @@ import { parseRoute } from '../lib';
 export default function ViewRecipes(props) {
   return (
     <>
-      <MainHeader />
-      <SubHeader location={parseRoute(location.hash)} />
+      <MainHeader location={parseRoute(location.hash)} />
       <CardViews recipeId={props.recipeId} editing={props.editing}/>
       <Navbar />
     </>
   );
 }
+
 class CardViews extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { recipes: [] };
+    this.state = { recipes: [], sort: 'new' };
     this.updateMade = this.updateMade.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.sortRecipe = this.sortRecipe.bind(this);
   }
 
   componentDidMount() {
     fetch('/api/recipes')
       .then(res => res.json())
       .then(result => {
-        this.setState({ recipes: result });
+        const recipes = result.map(recipe => {
+          const dateNum = (new Date(recipe.saved)).getTime();
+          recipe.dateNum = dateNum;
+          return recipe;
+        });
+        recipes.sort((a, b) => {
+          return b.dateNum - a.dateNum;
+        });
+        this.setState({ recipes });
       });
+  }
+
+  sortRecipe(e) {
+    const sortMethod = e.target.value;
+    const sortedArray = [...this.state.recipes];
+    if (sortMethod === 'new') {
+      sortedArray.sort((a, b) => {
+        return b.dateNum - a.dateNum;
+      });
+    }
+    if (sortMethod === 'old') {
+      sortedArray.sort((a, b) => {
+        return a.dateNum - b.dateNum;
+      });
+    }
+    if (sortMethod === 'a-z') {
+      sortedArray.sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    this.setState({ recipes: sortedArray });
   }
 
   editRecipe(editedRecipe) {
@@ -93,20 +131,33 @@ class CardViews extends React.Component {
   render() {
     if (!this.props.recipeId) {
       return (
-        <div id="recipes-list">
-          {
-            this.state.recipes.map(recipe => {
-              return (
-                <CompactCards recipe={recipe} key={recipe.recipeId} />
-              );
-            })
-          }
-        </div>
+        <>
+          <SubHeader sortMethod={this.sortRecipe} />
+          <div id="recipes-list">
+            {
+              this.state.recipes.map(recipe => {
+                return (
+                  <CompactCards recipe={recipe} key={recipe.recipeId} />
+                );
+              })
+            }
+          </div>
+        </>
       );
     }
     if (this.props.editing) {
-      return <AddRecipeForm editing={this.findRecipe(this.props.recipeId)} onSubmit={this.editRecipe} />;
+      return (
+        <>
+          <SubHeader />
+          <AddRecipeForm editing={this.findRecipe(this.props.recipeId)} onSubmit={this.editRecipe} />
+        </>
+      );
     }
-    return <FullCard recipe={this.findRecipe(this.props.recipeId)} updateMade={this.updateMade} delete={this.deleteRecipe}/>;
+    return (
+      <>
+        <SubHeader />
+        <FullCard recipe={this.findRecipe(this.props.recipeId)} updateMade={this.updateMade} delete={this.deleteRecipe} />
+      </>
+    );
   }
 }
