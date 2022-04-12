@@ -34,6 +34,8 @@ class CardViews extends React.Component {
         const recipes = result.map(recipe => {
           const dateNum = (new Date(recipe.saved)).getTime();
           recipe.dateNum = dateNum;
+          const madeNum = (new Date(recipe.lastMade)).getTime();
+          recipe.madeNum = madeNum;
           return recipe;
         });
         recipes.sort((a, b) => {
@@ -65,6 +67,16 @@ class CardViews extends React.Component {
           : nameA > nameB
             ? 1
             : 0;
+      });
+    }
+    if (sortMethod === 'made-new') {
+      sortedArray.sort((a, b) => {
+        return b.madeNum - a.madeNum;
+      });
+    }
+    if (sortMethod === 'made-old') {
+      sortedArray.sort((a, b) => {
+        return a.madeNum - b.madeNum;
       });
     }
     this.setState({ recipes: sortedArray });
