@@ -157,6 +157,7 @@ li > p {
 }
 
 #add-form-container,
+#search-form-container,
 .recipe-card-compact,
 .recipe-card-full,
 .delete-popup {
@@ -173,6 +174,7 @@ li > p {
 }
 
 #add-recipe-form,
+#search-recipe-form,
 .preview-container,
 .full-card-content,
 .delete-popup {

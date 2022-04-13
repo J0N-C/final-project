@@ -17,6 +17,9 @@ export default function MainHeader(props) {
       case 'edit-recipe':
         title = 'EDITING RECIPE CARD';
         break;
+      case 'search-recipes':
+        title = 'SEARCHING RECIPES';
+        break;
     }
   }
   return (

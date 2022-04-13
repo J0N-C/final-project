@@ -10,7 +10,7 @@ export default function navBar(props) {
         <a href='#view-recipes'>
           <i className="fa-solid fa-book-open"></i>
         </a>
-        <a>
+        <a href='#search-recipes'>
           <i className="fa-solid fa-magnifying-glass"></i>
         </a>
       </div>
