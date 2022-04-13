@@ -21,16 +21,20 @@ export default function SubHeader(props) {
   if (parseRoute(location.hash).path === 'search-recipes' && props.searchTerms) {
     let tags;
     let ingredients;
+    let results;
     if (props.searchTerms.ingredients) {
       ingredients = props.searchTerms.ingredients.join(', ');
     }
     if (props.searchTerms.tags) {
       tags = props.searchTerms.tags.join(', ');
     }
+    if (props.resultCount === 1) {
+      results = '1 RESULT FOUND';
+    } else results = `${props.resultCount} RESULTS FOUND`;
     return (
       <>
         <div id="sub-header-bot">
-          <h4>{props.resultCount} RESULTS FOUND</h4>
+          <h4>{results}</h4>
           <p><span>NAME:</span> {props.searchTerms.name}</p>
           <p><span>INGREDIENTS:</span> {ingredients}</p>
           <p><span>TAGS:</span> {tags}</p>
