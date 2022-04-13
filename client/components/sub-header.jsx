@@ -18,6 +18,30 @@ export default function SubHeader(props) {
       </>
     );
   }
+  if (parseRoute(location.hash).path === 'search-recipes' && props.searchTerms) {
+    let tags;
+    let ingredients;
+    if (props.searchTerms.ingredients) {
+      ingredients = props.searchTerms.ingredients.join(', ');
+    }
+    if (props.searchTerms.tags) {
+      tags = props.searchTerms.tags.join(', ');
+    }
+    return (
+      <>
+        <div id="sub-header-bot">
+          <h4>{props.resultCount} RESULTS FOUND</h4>
+          <p><span>NAME:</span> {props.searchTerms.name}</p>
+          <p><span>INGREDIENTS:</span> {ingredients}</p>
+          <p><span>TAGS:</span> {tags}</p>
+          <div className="flex just-btwn">
+            <button onClick={props.openSearch}>EDIT SEARCH</button>
+            <button onClick={props.newSearch}>NEW SEARCH</button>
+          </div>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div id="sub-header-bot">

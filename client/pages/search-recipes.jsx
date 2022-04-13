@@ -19,8 +19,20 @@ export default function SearchRecipes(props) {
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { recipes: [], searchResults: [] };
+    this.state = {
+      searchForm: true,
+      recipes: [],
+      searchResults: [],
+      searchTerms: {
+        name: '',
+        ingredients: '',
+        tags: '',
+        error: null
+      }
+    };
     this.searchResultDisplay = this.searchResultDisplay.bind(this);
+    this.newSearch = this.newSearch.bind(this);
+    this.openSearch = this.openSearch.bind(this);
   }
 
   componentDidMount() {
@@ -41,7 +53,25 @@ class SearchPage extends React.Component {
       });
   }
 
+  openSearch() {
+    const formState = !this.state.searchForm;
+    this.setState({ searchForm: formState });
+  }
+
+  newSearch() {
+    this.openSearch();
+    this.setState({
+      searchTerms: {
+        name: '',
+        ingredients: '',
+        tags: '',
+        error: null
+      }
+    });
+  }
+
   searchResultDisplay(searchTerms) {
+    this.openSearch();
     let results = [];
     if (searchTerms.name) {
       const nameRegex = new RegExp(`${searchTerms.name}`, 'i');
@@ -52,33 +82,37 @@ class SearchPage extends React.Component {
       results = results.concat(nameResult);
     }
     if (searchTerms.ingredients) {
-      const ingRegex = new RegExp(`${searchTerms.ingredients}`, 'i');
-      const ingResult = this.state.recipes.map(recipe => {
-        const test = ingRegex.test(recipe.ingredientNames);
-        return test ? recipe.recipeId : null;
+      searchTerms.ingredients.forEach(ingredient => {
+        const ingRegex = new RegExp(`${ingredient}`, 'i');
+        const ingResult = this.state.recipes.map(recipe => {
+          const test = ingRegex.test(recipe.ingredientNames);
+          return test ? recipe.recipeId : null;
+        });
+        results = results.concat(ingResult);
       });
-      results = results.concat(ingResult);
     }
     if (searchTerms.tags) {
-      const tagRegex = new RegExp(`${searchTerms.tags}`, 'i');
-      const tagResult = this.state.recipes.map(recipe => {
-        const test = tagRegex.test(recipe.tagNames);
-        return test ? recipe.recipeId : null;
+      searchTerms.tags.forEach(tag => {
+        const tagRegex = new RegExp(`${tag}`, 'i');
+        const tagResult = this.state.recipes.map(recipe => {
+          const test = tagRegex.test(recipe.tagNames);
+          return test ? recipe.recipeId : null;
+        });
+        results = results.concat(tagResult);
       });
-      results = results.concat(tagResult);
     }
     const setResults = [...new Set(results)].filter(Boolean);
     const finalResults = setResults.map(id => {
       return this.state.recipes.find(recipe => recipe.recipeId === id);
     });
-    this.setState({ searchResults: finalResults });
+    this.setState({ searchResults: finalResults, searchTerms });
   }
 
   render() {
-    if (this.state.searchResults[0]) {
+    if (!this.state.searchForm) {
       return (
         <>
-          <SubHeader />
+          <SubHeader searchTerms={this.state.searchTerms} resultCount={this.state.searchResults.length} openSearch={this.openSearch} newSearch={this.newSearch}/>
           <div id="result-list">
             {
               this.state.searchResults.map(recipe => {
@@ -94,7 +128,7 @@ class SearchPage extends React.Component {
     return (
       <>
         <SubHeader />
-        <SearchRecipesForm result={this.searchResultDisplay} />
+        <SearchRecipesForm searchTerms={this.state.searchTerms} result={this.searchResultDisplay} />
       </>
     );
   }
