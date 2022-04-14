@@ -114,7 +114,6 @@ export default class AddRecipeForm extends React.Component {
           <input required name="name" id="recipe-name" onChange={this.handleChange} type="text" value={this.state.name} placeholder="Enter recipe name" />
           <label htmlFor="image">Image URL</label>
           <input name="image" id="image" onChange={this.handleChange} type="url" value={this.state.image} placeholder="Optional Recipe Image" />
-          {/* Replace in future with separate ingredients list component */}
           <label htmlFor="ingredients">Ingredients</label>
           <DisplayIngredientsList ingredients={this.state.ingredients} delete={this.deleteIngredient} />
           {this.emptyIngredient()}
