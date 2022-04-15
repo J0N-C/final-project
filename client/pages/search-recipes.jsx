@@ -1,18 +1,11 @@
 import React from 'react';
-import MainHeader from '../components/main-header';
 import SubHeader from '../components/sub-header';
-import Navbar from '../components/navbar';
 import CompactCards from '../components/view-compact-recipe';
 import SearchRecipesForm from '../components/search-recipes-form';
-import { parseRoute } from '../lib';
 
 export default function SearchRecipes(props) {
   return (
-    <>
-      <MainHeader location={parseRoute(location.hash)} />
       <SearchPage />
-      <Navbar />
-    </>
   );
 }
 

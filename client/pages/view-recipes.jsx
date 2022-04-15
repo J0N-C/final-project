@@ -1,19 +1,12 @@
 import React from 'react';
-import MainHeader from '../components/main-header';
 import SubHeader from '../components/sub-header';
-import Navbar from '../components/navbar';
 import CompactCards from '../components/view-compact-recipe';
 import FullCard from '../components/view-full-recipe';
 import AddRecipeForm from '../components/add-recipe-form';
-import { parseRoute } from '../lib';
 
 export default function ViewRecipes(props) {
   return (
-    <>
-      <MainHeader location={parseRoute(location.hash)} />
       <CardViews recipeId={props.recipeId} editing={props.editing}/>
-      <Navbar />
-    </>
   );
 }
 
