@@ -2,6 +2,7 @@ import React from 'react';
 import Home from './pages/home';
 import AddRecipe from './pages/add-recipe';
 import ViewRecipes from './pages/view-recipes';
+import SearchRecipes from './pages/search-recipes';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -40,6 +41,9 @@ export default class App extends React.Component {
     if (route.path === 'edit-recipe') {
       const recipeId = parseInt(route.params.get('recipeId'));
       return <ViewRecipes recipeId={recipeId} editing={true} />;
+    }
+    if (route.path === 'search-recipes') {
+      return <SearchRecipes />;
     }
     return <h1>404 Page not found!</h1>;
   }
