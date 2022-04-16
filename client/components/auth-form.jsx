@@ -21,6 +21,9 @@ export default class AuthForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { action } = this.props;
+    if (action === 'sign-up' && (!this.state.username || !this.state.password || !this.state.firstName || !this.state.lastName)) {
+      return this.setState({ error: 'Please fill in all fields!' });
+    }
     const req = {
       method: 'POST',
       headers: {
@@ -31,12 +34,21 @@ export default class AuthForm extends React.Component {
     fetch(`/api/auth/${action}`, req)
       .then(res => res.json())
       .then(result => {
+        if (result.error === 'invalid login') {
+          return this.setState({ error: 'Invalid login!' });
+        }
         if (action === 'sign-up') {
           window.location.hash = 'sign-in';
         } else if (result.user && result.token) {
           this.props.onSignIn(result);
         }
       });
+  }
+
+  passwordError() {
+    if (this.state.error) {
+      return <p className="red">{this.state.error}</p>;
+    }
   }
 
   render() {
@@ -62,7 +74,6 @@ export default class AuthForm extends React.Component {
           </label>
           <input
             required
-            autoFocus
             id="username"
             type="text"
             name="username"
@@ -75,7 +86,6 @@ export default class AuthForm extends React.Component {
             </label>
             <input
               required
-              autoFocus
               id="firstName"
               type="text"
               name="firstName"
@@ -87,7 +97,6 @@ export default class AuthForm extends React.Component {
             </label>
             <input
               required
-              autoFocus
               id="lastName"
               type="text"
               name="lastName"
@@ -105,13 +114,14 @@ export default class AuthForm extends React.Component {
             name="password"
             onChange={handleChange} />
         </div>
+        {this.passwordError()}
         <div className="flex just-btwn">
           <div>
             <a className="tags" href={alternateActionHref}>
               {alternatActionText}
             </a>
           </div>
-          <button type="submit">
+          <button onClick={this.handleSubmit}>
             { submitButtonText }
           </button>
         </div>

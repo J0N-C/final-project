@@ -42,6 +42,7 @@ export default class App extends React.Component {
   handleSignOut() {
     window.localStorage.removeItem('react-context-jwt');
     this.setState({ user: null });
+    window.location.hash = '';
   }
 
   renderPage() {
@@ -75,13 +76,13 @@ export default class App extends React.Component {
 
   render() {
     const { user, route } = this.state;
-    const { handleSignIn, handleSignOut } = this;
-    const contextValue = { user, route, handleSignIn, handleSignOut };
+    const { handleSignIn } = this;
+    const contextValue = { user, route, handleSignIn };
     return (
       <AppContext.Provider value={contextValue}>
-        <MainHeader location={parseRoute(location.hash)} />
+        <MainHeader location={parseRoute(location.hash)} handleSignOut={this.handleSignOut} user={user}/>
         {this.renderPage()}
-        <Navbar />
+        <Navbar path={parseRoute(location.hash).path}/>
       </AppContext.Provider>
     );
   }

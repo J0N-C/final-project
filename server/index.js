@@ -6,9 +6,8 @@ const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
-// Testing dummy user 1
-const dummyUser = 1;
-
+const authorizationMiddleware = require('./authorization-middleware');
+// For Testing: User bending@planetexpress.com, password Fakepass123
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -80,8 +79,10 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.use(authorizationMiddleware);
+
 app.get('/api/recipes', (req, res, next) => {
-  // REPLACE USERID!!! Testing as 1 with dummy user
+  const { userId } = req.user;
   const sql = `
     select "r"."name",
       "r"."recipeId",
@@ -105,7 +106,7 @@ app.get('/api/recipes', (req, res, next) => {
     where "userId" = $1
     group by "recipeId"
     `;
-  const params = [dummyUser];
+  const params = [userId];
   db.query(sql, params)
     .then(result => {
       const recipes = [...result.rows];
@@ -122,7 +123,7 @@ app.get('/api/recipes', (req, res, next) => {
 });
 
 app.post('/api/addrecipe', (req, res, next) => {
-  // REPLACE USERID!!! Testing as 1 with dummy user
+  const { userId } = req.user;
   const {
     name,
     image,
@@ -140,7 +141,7 @@ app.post('/api/addrecipe', (req, res, next) => {
     values ($1, $2, $3, $4)
     returning *
     `;
-  const params = [dummyUser, name, instructions, notes];
+  const params = [userId, name, instructions, notes];
   return (
     db.query(sql, params)
       .then(result => {

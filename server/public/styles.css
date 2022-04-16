@@ -137,6 +137,14 @@ li > p {
   top: 0;
 }
 
+.sign-out,
+i.sign-out {
+  margin: 0;
+  padding-left: 0.25rem;
+  color: white;
+  font-size: 10pt;
+}
+
 #sub-header-top,
 #navbar {
   background-color: #a3da8d;
@@ -148,6 +156,7 @@ li > p {
   position: fixed;
   bottom: 0;
   width: 100%;
+  min-height: 2rem;
   max-height: 4rem;
 }
 

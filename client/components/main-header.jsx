@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default function MainHeader(props) {
+  let showLogout = '';
+  if (!props.user) {
+    showLogout = 'hidden';
+  }
   let title = 'WHAT\'S COOKING TODAY?';
   if (props.location) {
     const loc = props.location.path;
@@ -24,9 +28,13 @@ export default function MainHeader(props) {
   }
   return (
     <div className="sticky-top">
-      <div id="main-header">
+      <div id="main-header" className="flex just-btwn al-center">
         <a href="">
           <h1>Recipe Deck</h1>
+        </a>
+        <a className={`flex al-center ${showLogout}`} onClick={props.handleSignOut}>
+          <p className="sign-out">SIGN OUT</p>
+          <i className="fa-solid fa-arrow-right-from-bracket sign-out"></i>
         </a>
       </div>
       <div id="sub-header-top">
