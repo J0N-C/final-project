@@ -14,7 +14,6 @@ function newRecipe(newRecipe) {
 }
 
 export default function AddRecipe(props) {
-
   return (
     <>
       <SubHeader />

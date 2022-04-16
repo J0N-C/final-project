@@ -70,12 +70,12 @@ export default class AuthForm extends React.Component {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">
-            Username
+            Email
           </label>
           <input
             required
             id="username"
-            type="text"
+            type="email"
             name="username"
             onChange={handleChange} />
         </div>
