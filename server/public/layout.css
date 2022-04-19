@@ -10,7 +10,10 @@
   width: 100%;
 }
 
-.col-30 {
+.col-25,
+.col-33,
+.col-50,
+.col-66 {
   width: 100%;
 }
 
@@ -35,6 +38,10 @@
   align-items: center;
 }
 
+.al-end {
+  align-items: flex-end;
+}
+
 .pos-rel {
   position: relative;
 }
@@ -50,13 +57,21 @@
     background-color: #292929;
   }
 
-  .col-75 {
-    width: 75%;
+  .col-66 {
+    width: 66%;
   }
 
-  .col-30 {
+  .col-50 {
+    width: 50%;
+  }
+
+  .col-33 {
     width: 33.33%;
     margin: 0;
+  }
+
+  .col-25 {
+    width: 25%;
   }
 
   .fill-col {
