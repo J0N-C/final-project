@@ -10,6 +10,10 @@
   width: 100%;
 }
 
+.col-30 {
+  width: 100%;
+}
+
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -37,4 +41,25 @@
 
 .flex-end {
   justify-content: flex-end;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    margin: auto;
+    max-width: 1280px;
+    background-color: #292929;
+  }
+
+  .col-75 {
+    width: 75%;
+  }
+
+  .col-30 {
+    width: 33.33%;
+    margin: 0;
+  }
+
+  .fill-col {
+    width: 70%;
+  }
 }

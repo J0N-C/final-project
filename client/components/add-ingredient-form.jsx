@@ -45,7 +45,7 @@ export default class AddIngredientForm extends React.Component {
 
   render() {
     return (
-      <div className="ingredient-entry-form flex al-center wrap">
+      <div className="ingredient-entry-form flex just-btwn al-center wrap">
         <label htmlFor="ingredient" className="col-full">Add New Ingredient</label>
         <div className="ingredient-inputs">
           <input name="amount" id="amount" onChange={this.handleChange} type="text" value={this.state.amount} placeholder="Quantity ex: 2 cups" />

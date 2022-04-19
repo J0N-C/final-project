@@ -111,7 +111,7 @@ class SearchPage extends React.Component {
       return (
         <>
           <SubHeader searchTerms={this.state.searchTerms} resultCount={this.state.searchResults.length} openSearch={this.openSearch} newSearch={this.newSearch}/>
-          <div id="result-list">
+          <div id="result-list" className="flex wrap">
             {
               this.state.searchResults.map(recipe => {
                 return (

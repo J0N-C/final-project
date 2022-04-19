@@ -152,7 +152,7 @@ class CardViews extends React.Component {
       return (
         <>
           <SubHeader sortMethod={this.sortRecipe} />
-          <div id="recipes-list">
+          <div id="recipes-list" className="flex wrap">
             {
               this.state.recipes.map(recipe => {
                 return (
