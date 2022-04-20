@@ -286,7 +286,7 @@ i.sign-out {
 }
 
 .ingredient-inputs {
-  width: 80%;
+  width: 90%;
 }
 
 .ingredient-inputs input {
@@ -355,5 +355,10 @@ i.gray-icon {
 
   #navbar-bottom {
     display: none;
+  }
+
+  #auth-form,
+  #search-form-container {
+    margin: 1rem 5rem;
   }
 }
