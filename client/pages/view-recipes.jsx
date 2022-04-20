@@ -1,26 +1,24 @@
 import React from 'react';
-import MainHeader from '../components/main-header';
 import SubHeader from '../components/sub-header';
-import Navbar from '../components/navbar';
+import AppContext from '../lib/app-context';
 import CompactCards from '../components/view-compact-recipe';
 import FullCard from '../components/view-full-recipe';
 import AddRecipeForm from '../components/add-recipe-form';
-import { parseRoute } from '../lib';
 
 export default function ViewRecipes(props) {
   return (
-    <>
-      <MainHeader location={parseRoute(location.hash)} />
       <CardViews recipeId={props.recipeId} editing={props.editing}/>
-      <Navbar />
-    </>
   );
 }
 
 class CardViews extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { recipes: [], sort: 'new' };
+    this.state = {
+      recipes: [],
+      sort: 'new',
+      token: window.localStorage.getItem('react-context-jwt')
+    };
     this.updateMade = this.updateMade.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
@@ -28,7 +26,11 @@ class CardViews extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/recipes')
+    const postHeader = [
+      ['Content-Type', 'application/json'],
+      ['X-Access-Token', this.state.token]
+    ];
+    fetch('/api/recipes', { method: 'GET', headers: postHeader })
       .then(res => res.json())
       .then(result => {
         const recipes = result.map(recipe => {
@@ -85,7 +87,8 @@ class CardViews extends React.Component {
   editRecipe(editedRecipe) {
     const updateRecipe = JSON.stringify(editedRecipe);
     const postHeader = [
-      ['Content-Type', 'application/json']
+      ['Content-Type', 'application/json'],
+      ['X-Access-Token', this.state.token]
     ];
     fetch('/api/editrecipe', { method: 'PUT', headers: postHeader, body: updateRecipe })
       .then(res => res.json())
@@ -102,7 +105,8 @@ class CardViews extends React.Component {
 
   updateMade(recipeId) {
     const postHeader = [
-      ['Content-Type', 'application/json']
+      ['Content-Type', 'application/json'],
+      ['X-Access-Token', this.state.token]
     ];
     fetch(`/api/made-this/${recipeId}`, { method: 'PUT', headers: postHeader })
       .then(res => res.json())
@@ -119,7 +123,8 @@ class CardViews extends React.Component {
 
   deleteRecipe(recipeId) {
     const postHeader = [
-      ['Content-Type', 'application/json']
+      ['Content-Type', 'application/json'],
+      ['X-Access-Token', this.state.token]
     ];
     fetch(`/api/delete-recipe/${recipeId}`, { method: 'DELETE', headers: postHeader })
       .then(res => res.json())
@@ -140,6 +145,10 @@ class CardViews extends React.Component {
 
   render() {
     if (!this.props.recipeId) {
+      if (!this.state.recipes[0]) {
+        const message = 'You have no recipes saved! Try adding a new recipe!';
+        return <SubHeader message={message} />;
+      }
       return (
         <>
           <SubHeader sortMethod={this.sortRecipe} />
@@ -171,3 +180,5 @@ class CardViews extends React.Component {
     );
   }
 }
+
+CardViews.contextType = AppContext;

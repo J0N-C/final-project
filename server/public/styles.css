@@ -67,6 +67,7 @@ img {
 
 input,
 textarea {
+  width: 100%;
   margin-bottom: 1rem;
   border: 1px solid #aaa;
   border-radius: 4px;
@@ -136,6 +137,14 @@ li > p {
   top: 0;
 }
 
+.sign-out,
+i.sign-out {
+  margin: 0;
+  padding-left: 0.25rem;
+  color: white;
+  font-size: 10pt;
+}
+
 #sub-header-top,
 #navbar {
   background-color: #a3da8d;
@@ -147,6 +156,7 @@ li > p {
   position: fixed;
   bottom: 0;
   width: 100%;
+  min-height: 2rem;
   max-height: 4rem;
 }
 
@@ -156,6 +166,7 @@ li > p {
   padding: 0.25rem 1rem;
 }
 
+#auth-form,
 #add-form-container,
 #search-form-container,
 .recipe-card-compact,
@@ -173,6 +184,7 @@ li > p {
   margin-bottom: 5rem;
 }
 
+#auth-form,
 #add-recipe-form,
 #search-recipe-form,
 .preview-container,

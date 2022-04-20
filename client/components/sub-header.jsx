@@ -2,7 +2,23 @@ import React from 'react';
 import { parseRoute } from '../lib';
 
 export default function SubHeader(props) {
+  if (parseRoute(location.hash).path === 'sign-in' || parseRoute(location.hash).path === 'sign-up') {
+    return (
+      <>
+        <div id="sub-header-bot">
+          <h4>{props.welcomeMessage}</h4>
+        </div>
+      </>
+    );
+  }
   if (parseRoute(location.hash).path === 'view-recipes') {
+    if (props.message) {
+      return (
+        <div id="sub-header-bot">
+          <p>{props.message}</p>
+        </div>
+      );
+    }
     return (
       <>
         <div id="sub-header-bot">

@@ -1,6 +1,15 @@
 import React from 'react';
 
 export default function navBar(props) {
+  if (props.path === 'sign-in' || props.path === 'sign-up') {
+    return (
+      <>
+        <div id="navbar" className="flex just-even">
+
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div id="navbar" className="flex just-even">

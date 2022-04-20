@@ -1,18 +1,11 @@
 import React from 'react';
-import MainHeader from '../components/main-header';
 import SubHeader from '../components/sub-header';
-import Navbar from '../components/navbar';
 import CompactCards from '../components/view-compact-recipe';
 import SearchRecipesForm from '../components/search-recipes-form';
-import { parseRoute } from '../lib';
 
 export default function SearchRecipes(props) {
   return (
-    <>
-      <MainHeader location={parseRoute(location.hash)} />
       <SearchPage />
-      <Navbar />
-    </>
   );
 }
 
@@ -28,7 +21,8 @@ class SearchPage extends React.Component {
         ingredients: '',
         tags: '',
         error: null
-      }
+      },
+      token: window.localStorage.getItem('react-context-jwt')
     };
     this.searchResultDisplay = this.searchResultDisplay.bind(this);
     this.newSearch = this.newSearch.bind(this);
@@ -36,7 +30,11 @@ class SearchPage extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/recipes')
+    const postHeader = [
+      ['Content-Type', 'application/json'],
+      ['X-Access-Token', this.state.token]
+    ];
+    fetch('/api/recipes', { method: 'GET', headers: postHeader })
       .then(res => res.json())
       .then(result => {
         const recipes = result.map(recipe => {

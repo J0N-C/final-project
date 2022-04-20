@@ -16,6 +16,7 @@ CREATE TABLE "users" (
 	"lastName" TEXT NOT NULL,
 	"email" TEXT NOT NULL UNIQUE,
 	"hashedPassword" TEXT NOT NULL,
+  "createdAt" TIMESTAMPTZ NOT NULL default now(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE

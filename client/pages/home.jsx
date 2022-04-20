@@ -1,17 +1,10 @@
 import React from 'react';
-import MainHeader from '../components/main-header';
-import SubHeader from '../components/sub-header';
-import Navbar from '../components/navbar';
-
-export default function Home(props) {
-  return (
-      <>
-        <MainHeader />
-        <SubHeader />
-        <div id="homepage">
-          PLACEHOLDER
-        </div>
-        <Navbar />
-      </>
-  );
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
+export default class Home extends React.Component {
+  render() {
+    if (!this.context.user) return <Redirect to="sign-in" />;
+    return <Redirect to="view-recipes" />;
+  }
 }
+Home.contextType = AppContext;
