@@ -34,6 +34,10 @@
   justify-content: space-between;
 }
 
+.just-end {
+  justify-content: flex-end;
+}
+
 .al-center {
   align-items: center;
 }
@@ -68,6 +72,14 @@
   .col-33 {
     width: 33.33%;
     margin: 0;
+  }
+
+  .col-40 {
+    width: 40%;
+  }
+
+  .col-60 {
+    width: 60%;
   }
 
   .col-25 {

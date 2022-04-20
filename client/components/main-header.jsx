@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBarTop from './navbar-top';
 
 export default function MainHeader(props) {
   let showLogout = '';
@@ -37,8 +38,11 @@ export default function MainHeader(props) {
           <i className="fa-solid fa-arrow-right-from-bracket sign-out"></i>
         </a>
       </div>
-      <div id="sub-header-top">
-        <h3>{title}</h3>
+      <div className="flex">
+        <div id="sub-header-top" className="col-50">
+          <h3>{title}</h3>
+        </div>
+        <NavBarTop />
       </div>
     </div>
 

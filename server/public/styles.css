@@ -9,7 +9,13 @@
 }
 
 body {
+  background-color: darkgray;
+}
+
+#root {
+  min-height: 100vh;
   background-color: #f0f0f0;
+  padding-bottom: 1rem;
 }
 
 a {
@@ -94,6 +100,7 @@ button {
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
   font-size: 16pt;
+  max-width: 16rem;
 }
 
 ul {
@@ -152,20 +159,33 @@ i.sign-out {
 }
 
 #sub-header-top,
-#navbar {
+#navbar-bottom {
   background-color: #a3da8d;
   padding: 0.25rem 1rem;
   max-height: 4rem;
 }
 
-#navbar {
-  position: sticky;
+#navbar-bottom {
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
   min-height: 2rem;
   max-height: 4rem;
+}
+
+#navbar-top {
+  background-color: #a3da8d;
+  display: none;
+}
+
+#navbar-top * {
+  font-size: 1rem;
+}
+
+#navbar-top a {
+  display: inline-block;
 }
 
 #recipes-list {
@@ -191,7 +211,14 @@ i.sign-out {
 }
 
 .recipe-card-compact {
+  min-height: 50%;
   margin: 0.5rem;
+}
+
+#add-form-container,
+.compact-card-container:last-child,
+.recipe-card-full {
+  margin-bottom: 5rem;
 }
 
 #auth-form,
@@ -313,4 +340,20 @@ i.gray-icon {
 
 .text-center {
   margin: 0 0.5;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    margin: auto;
+    max-width: 1280px;
+    background-color: #292929;
+  }
+
+  #navbar-top {
+    display: block;
+  }
+
+  #navbar-bottom {
+    display: none;
+  }
 }

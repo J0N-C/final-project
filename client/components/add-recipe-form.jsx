@@ -125,8 +125,10 @@ export default class AddRecipeForm extends React.Component {
           <label htmlFor="tags">Tags</label>
           <textarea name="tags" id="tags" onChange={this.handleChange} value={this.state.tags} placeholder="Enter optional tags separated by commas, ex: lunch, beef, dairy, gluten" rows="3"/>
           {this.emptyIngredient()}
-          <button type="submit">{buttonName}</button>
-          <button type="button" onClick={this.cancel}>Cancel</button>
+          <div className="flex-col al-center">
+            <button type="submit">{buttonName}</button>
+            <button type="button" onClick={this.cancel}>Cancel</button>
+          </div>
         </form>
       </div>
     );
