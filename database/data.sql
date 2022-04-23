@@ -1,12 +1,12 @@
 insert into "users"
   ("firstName", "lastName", "email", "hashedPassword")
   values
-    ('Bender', 'Rodriguez', 'bending@planetexpress.com', '$argon2i$v=19$m=4096,t=3,p=1$x4jRxOB+u5Wx5Bhcbtihkg$+jTaL+X8j+IKA2o9mwbBTzEg3oxP7tvzvGkhP7DkKuU');
+    ('Bender', 'Rodriguez', 'fake@testmail.com', '$argon2i$v=19$m=4096,t=3,p=1$x4jRxOB+u5Wx5Bhcbtihkg$+jTaL+X8j+IKA2o9mwbBTzEg3oxP7tvzvGkhP7DkKuU');
 
 insert into "recipes"
   ("userId", "name", "instructions", "notes")
   values
-    (1, 'Cheeseburger', E'Assemble:\nbottom bun\nmayo\npatty\ncheese\nonion\ntomato\nlettuce\nketchup\nmustard\npickles\ntop bun', 'test recipe');
+    (1, 'Cheeseburger', E'Cook patties on pan\nAssemble: bottom bun, nmayo, patty, cheese, onion, tomato, lettuce, ketchup, mustard, pickles, top bun\nEnjoy', 'test recipe');
 
 insert into "ingredients"
   ("name")
@@ -54,3 +54,83 @@ insert into "tags"
     (1, 1),
     (1, 2),
     (1, 3);
+
+
+insert into "recipes"
+  ("userId", "name", "instructions", "notes")
+  values
+    (1, 'Guacamole', 'Combine ingredients in bowl, add salt and pepper to taste.', 'test recipe');
+
+insert into "ingredients"
+  ("name")
+  values
+    ('avocadoes'),
+    ('serrano chile'),
+    ('cilantro'),
+    ('salt'),
+    ('limes');
+
+insert into "pictures"
+  ("url", "recipeId")
+  values
+    ('https://i.imgur.com/toSH7qV.jpeg', 2);
+
+insert into "recipeIngredients"
+  ("recipeId", "ingredientId", "amount", "preparation")
+  values
+  (2, 11, '4', ''),
+  (2, 5, '1', 'diced'),
+  (2, 12, '1', 'diced'),
+  (2, 13, '1/2 cup', ''),
+  (2, 14, '', 'to taste'),
+  (2, 15, '2', '');
+
+insert into "tags"
+  ("name")
+  values
+  ('vegan');
+
+  insert into "recipeTags"
+    ("recipeId", "tagId")
+    values
+    (2, 4);
+
+
+insert into "recipes"
+  ("userId", "name", "instructions", "notes")
+  values
+    (1, 'Old Fashioned', 'Combine ingredients in bowl, add salt and pepper to taste.', 'test recipe');
+
+insert into "ingredients"
+  ("name")
+  values
+    ('avocadoes'),
+    ('serrano chile'),
+    ('cilantro'),
+    ('salt'),
+    ('limes');
+
+insert into "pictures"
+  ("url", "recipeId")
+  values
+    ('https://i.imgur.com/toSH7qV.jpeg', 2);
+
+insert into "recipeIngredients"
+  ("recipeId", "ingredientId", "amount", "preparation")
+  values
+  (2, 11, '4', ''),
+  (2, 5, '1', 'diced'),
+  (2, 12, '1', 'diced'),
+  (2, 13, '1/2 cup', ''),
+  (2, 14, '', 'to taste'),
+  (2, 15, '2', '');
+
+insert into "tags"
+  ("name")
+  values
+  ('vegan');
+
+  insert into "recipeTags"
+    ("recipeId", "tagId")
+    values
+    (2, 4);
