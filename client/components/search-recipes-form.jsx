@@ -76,7 +76,9 @@ export default class SearchRecipesForm extends React.Component {
           <label htmlFor="tags">Search by recipe tags:</label>
           <input name="tags" id="recipe-tag" onChange={this.handleChange} type="text" value={this.state.tags} placeholder="Ex: beef, dairy, gluten" />
           {this.searchError()}
-          <button type="submit">{'SEARCH'}</button>
+          <div className="flex just-cent">
+            <button className="col-33" type="submit">{'SEARCH'}</button>
+          </div>
         </form>
       </div>
     );

@@ -7,7 +7,7 @@ const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const authorizationMiddleware = require('./authorization-middleware');
-// For Testing: User bending@planetexpress.com, password Fakepass123
+
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {

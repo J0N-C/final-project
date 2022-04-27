@@ -12,7 +12,8 @@ export default function CompactCards(props) {
   }
 
   return (
-    <a id={recipe.recipeId} href={`#view-recipe?recipeId=${recipe.recipeId}`} className="recipe-card-compact box-shadow">
+    <div className="compact-card-container col-33">
+      <a id={recipe.recipeId} href={`#view-recipe?recipeId=${recipe.recipeId}`} className="recipe-card-compact box-shadow">
         <div className="card-title">
           <h2>{recipe.name}</h2>
         </div>
@@ -30,5 +31,6 @@ export default function CompactCards(props) {
           </div>
         </div>
       </a>
+    </div>
   );
 }

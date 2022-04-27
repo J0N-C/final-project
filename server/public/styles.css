@@ -9,7 +9,13 @@
 }
 
 body {
+  background-color: darkgray;
+}
+
+#root {
+  min-height: 100vh;
   background-color: #f0f0f0;
+  padding-bottom: 1rem;
 }
 
 a {
@@ -61,7 +67,8 @@ li {
 }
 
 img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
   border-radius: 6px;
 }
 
@@ -93,6 +100,7 @@ button {
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
   font-size: 16pt;
+  max-width: 16rem;
 }
 
 ul {
@@ -129,12 +137,17 @@ li > p {
   min-height: 100vh;
 }
 
+.sticky-top {
+  position: sticky;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
 #main-header {
   background-color: #286d61;
   padding: 0.25rem 1rem;
   width: 100%;
-  position: sticky;
-  top: 0;
 }
 
 .sign-out,
@@ -146,18 +159,37 @@ i.sign-out {
 }
 
 #sub-header-top,
-#navbar {
+#navbar-bottom {
   background-color: #a3da8d;
   padding: 0.25rem 1rem;
   max-height: 4rem;
 }
 
-#navbar {
+#navbar-bottom {
   position: fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   min-height: 2rem;
   max-height: 4rem;
+}
+
+#navbar-top {
+  background-color: #a3da8d;
+  display: none;
+}
+
+#navbar-top * {
+  font-size: 1rem;
+}
+
+#navbar-top a {
+  display: inline-block;
+}
+
+#recipes-list {
+  padding: 0.5rem;
 }
 
 #sub-header-bot {
@@ -178,8 +210,13 @@ i.sign-out {
   background-color: white;
 }
 
+.recipe-card-compact {
+  min-height: 50%;
+  margin: 0.5rem;
+}
+
 #add-form-container,
-.recipe-card-compact:last-child,
+.compact-card-container:last-child,
 .recipe-card-full {
   margin-bottom: 5rem;
 }
@@ -218,6 +255,10 @@ i.sign-out {
   width: 50%;
 }
 
+.image-container {
+  max-height: 400px;
+}
+
 .image-preview {
   border-radius: 6rem;
   width: 50%;
@@ -228,6 +269,7 @@ i.sign-out {
 .image-full {
   border-radius: 6rem;
   width: 75%;
+  max-height: 400px;
   margin: 0 auto;
   min-height: 100px;
   padding: 0.5rem;
@@ -244,7 +286,7 @@ i.sign-out {
 }
 
 .ingredient-inputs {
-  width: 80%;
+  width: 90%;
 }
 
 .ingredient-inputs input {
@@ -298,4 +340,25 @@ i.gray-icon {
 
 .text-center {
   margin: 0 0.5;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    margin: auto;
+    max-width: 1280px;
+    background-color: #292929;
+  }
+
+  #navbar-top {
+    display: block;
+  }
+
+  #navbar-bottom {
+    display: none;
+  }
+
+  #auth-form,
+  #search-form-container {
+    margin: 1rem 5rem;
+  }
 }
