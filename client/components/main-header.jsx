@@ -42,7 +42,7 @@ export default function MainHeader(props) {
         <div id="sub-header-top" className="col-50">
           <h3>{title}</h3>
         </div>
-        <NavBarTop />
+        <NavBarTop path={props.location.path}/>
       </div>
     </div>
 

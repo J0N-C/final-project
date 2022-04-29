@@ -2,6 +2,8 @@ import React from 'react';
 import SubHeader from '../components/sub-header';
 import CompactCards from '../components/view-compact-recipe';
 import SearchRecipesForm from '../components/search-recipes-form';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default function SearchRecipes(props) {
   return (
@@ -30,6 +32,7 @@ class SearchPage extends React.Component {
   }
 
   componentDidMount() {
+    if (!this.state.token) return;
     const postHeader = [
       ['Content-Type', 'application/json'],
       ['X-Access-Token', this.state.token]
@@ -107,6 +110,7 @@ class SearchPage extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="sign-in" />;
     if (!this.state.searchForm) {
       return (
         <>
@@ -131,3 +135,5 @@ class SearchPage extends React.Component {
     );
   }
 }
+
+SearchPage.contextType = AppContext;

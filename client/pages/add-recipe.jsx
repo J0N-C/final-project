@@ -1,4 +1,5 @@
 import React from 'react';
+import Redirect from '../components/redirect';
 import AddRecipeForm from '../components/add-recipe-form';
 import SubHeader from '../components/sub-header';
 
@@ -14,6 +15,7 @@ function newRecipe(newRecipe) {
 }
 
 export default function AddRecipe(props) {
+  if (!props.user) return <Redirect to="sign-in" />;
   return (
     <>
       <SubHeader />
