@@ -4,8 +4,7 @@ export default function navBarTop(props) {
   if (props.path === 'sign-in' || props.path === 'sign-up') {
     return (
       <>
-        <div id="navbar" className="flex just-even">
-
+        <div id="navbar-top" className="flex just-end col-50">
         </div>
       </>
     );

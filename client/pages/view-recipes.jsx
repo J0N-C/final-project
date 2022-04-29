@@ -26,6 +26,7 @@ class CardViews extends React.Component {
   }
 
   componentDidMount() {
+    if (!this.state.token) return;
     const postHeader = [
       ['Content-Type', 'application/json'],
       ['X-Access-Token', this.state.token]

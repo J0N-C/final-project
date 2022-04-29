@@ -55,7 +55,7 @@ export default class App extends React.Component {
       return <Auth />;
     }
     if (route.path === 'add-recipe') {
-      return <AddRecipe />;
+      return <AddRecipe user={this.state.user} />;
     }
     if (route.path === 'view-recipes') {
       return <ViewRecipes />;
