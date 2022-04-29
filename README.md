@@ -42,7 +42,7 @@ Note: When registering, emails are only for identification purposes only. I will
 
 ## Preview:
 ### Usage Demo:
-![demo gif](https://github.com/J0N-C/recipe-deck/readme-demo/recipe-deck-responsive-demo.gif "demo gif")
+![demo gif](https://github.com/J0N-C/recipe-deck/blob/master/readme-demo/recipe-deck-responsive-demo.gif "demo gif")
 
 ## Stretch Features:
 * User can check off which ingredient and instruction step they have completed as they cook to keep track of where they are
