@@ -41,8 +41,10 @@ function DeleteConfirmation(props) {
       <div className="dark-overlay flex-col just-cent al-center">
         <div className="delete-popup flex-col col-30">
           <p className="text-center">ARE YOU SURE YOU WANT TO DELETE RECIPE FOR: <span className="bold">{props.recipeName.toUpperCase()}</span>?</p>
-          <button onClick={props.delete} className="confirm-delete">CONFIRM</button>
-          <button onClick={props.cancel} className="close-delete">CANCEL</button>
+          <div className="flex just-btwn">
+            <button onClick={props.delete} className="confirm-delete fg-1">CONFIRM</button>
+            <button onClick={props.cancel} className="close-delete fg-1">CANCEL</button>
+          </div>
         </div>
       </div>
     );
