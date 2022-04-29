@@ -9,7 +9,7 @@ https://recipe-deck.herokuapp.com/
 
 For testing a pre-set user with saved recipes, login with the following: email `fake@testmail.com`, password `Fakepass123`
 
-Note: When registering, emails are only for identification purposes only. I will not send unsolicted emails to addresses registered, and I recommend using a fake or placeholder if you would like to register a new user for testing. The database may be irregularly reset as I continue testing and developing, and I currently do not have much experience in terms of security features, so please do not save any important information within.
+Note: When registering, emails are only for identification purposes only. I will not send unsolicited messages to addresses registered, and I recommend using a fake or placeholder if you would like to register a new user for testing. The database may be irregularly reset as I continue testing and developing, and I currently do not have much experience in terms of security features, so please do not save any important information within.
 
 ## Technologies Used:
 * JavaScript
