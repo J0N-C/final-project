@@ -11,7 +11,7 @@ export default function navBarTop(props) {
   }
   return (
     <>
-      <div id="navbar-top" className="flex just-end col-50">
+      <nav id="navbar-top" className="flex just-end col-50">
         <div className="flex just-end">
           <a href='#add-recipe' className="col-25">
             <i className="fa-solid fa-file-circle-plus"></i>
@@ -26,7 +26,7 @@ export default function navBarTop(props) {
             <span>Search</span>
           </a>
         </div>
-      </div>
+      </nav>
     </>
   );
 }

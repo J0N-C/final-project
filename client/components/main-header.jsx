@@ -28,7 +28,7 @@ export default function MainHeader(props) {
     }
   }
   return (
-    <div className="sticky-top">
+    <header className="sticky-top">
       <div id="main-header" className="flex just-btwn al-center">
         <a href="">
           <h1>Recipe Deck</h1>
@@ -44,7 +44,7 @@ export default function MainHeader(props) {
         </div>
         <NavBarTop path={props.location.path}/>
       </div>
-    </div>
+    </header>
 
   );
 }
