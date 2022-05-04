@@ -1,7 +1,7 @@
 insert into "users"
   ("firstName", "lastName", "email", "hashedPassword")
   values
-    ('Bender', 'Rodriguez', 'fake@testmail.com', '$argon2i$v=19$m=4096,t=3,p=1$x4jRxOB+u5Wx5Bhcbtihkg$+jTaL+X8j+IKA2o9mwbBTzEg3oxP7tvzvGkhP7DkKuU');
+    ('Demo', 'User', 'demo_user@faketestmail.com', '$argon2i$v=19$m=4096,t=3,p=1$x4jRxOB+u5Wx5Bhcbtihkg$+jTaL+X8j+IKA2o9mwbBTzEg3oxP7tvzvGkhP7DkKuU');
 
 insert into "recipes"
   ("userId", "name", "instructions", "notes")

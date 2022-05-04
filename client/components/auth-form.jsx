@@ -11,6 +11,7 @@ export default class AuthForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.demoSubmit = this.demoSubmit.bind(this);
   }
 
   handleChange(event) {
@@ -45,6 +46,15 @@ export default class AuthForm extends React.Component {
       });
   }
 
+  demoSubmit(event) {
+    this.setState({
+      username: 'demo_user@faketestmail.com',
+      password: 'Fakepass123'
+    },
+    () => { this.handleSubmit(event); }
+    );
+  }
+
   passwordError() {
     if (this.state.error) {
       return <p className="red">{this.state.error}</p>;
@@ -66,6 +76,9 @@ export default class AuthForm extends React.Component {
     const registerForm = action === 'sign-up'
       ? ''
       : 'hidden';
+    const demoLogin = action === 'sign-in'
+      ? ''
+      : 'hidden';
     return (
       <form onSubmit={handleSubmit}>
         <div>
@@ -77,7 +90,8 @@ export default class AuthForm extends React.Component {
             id="username"
             type="email"
             name="username"
-            onChange={handleChange} />
+            onChange={handleChange}
+            value={this.state.username} />
         </div>
         <div className={registerForm}>
           <div>
@@ -89,7 +103,8 @@ export default class AuthForm extends React.Component {
               id="firstName"
               type="text"
               name="firstName"
-              onChange={handleChange} />
+              onChange={handleChange}
+              value={this.state.firstName} />
           </div>
           <div>
             <label htmlFor="lastName">
@@ -100,7 +115,8 @@ export default class AuthForm extends React.Component {
               id="lastName"
               type="text"
               name="lastName"
-              onChange={handleChange} />
+              onChange={handleChange}
+              value={this.state.lastName} />
           </div>
         </div>
         <div>
@@ -112,9 +128,15 @@ export default class AuthForm extends React.Component {
             id="password"
             type="password"
             name="password"
-            onChange={handleChange} />
+            onChange={handleChange}
+            value={this.state.password} />
         </div>
         {this.passwordError()}
+        <div>
+          <button type="button" className={`tags ${demoLogin}`} onClick={this.demoSubmit}>
+            Sign In as Demo User
+          </button>
+        </div>
         <div className="flex just-btwn">
           <div>
             <a className="tags" href={alternateActionHref}>
