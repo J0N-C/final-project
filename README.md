@@ -39,7 +39,7 @@ Note: When registering, the sign-in/sign-up pages are intended to be for proof o
 * Users can log in to manage their recipes or log out when they are done
 
 ## Preview:
-### Usage Demo:
+### Responsive layout & Usage Demo:
 ![demo gif](https://github.com/J0N-C/recipe-deck/blob/master/readme-demo/recipe-deck-responsive-demo.gif "demo gif")
 
 ## Stretch Features:
