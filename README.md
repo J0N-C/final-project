@@ -42,6 +42,10 @@ Note: When registering, the sign-in/sign-up pages are intended to be for proof o
 ### Responsive layout & Usage Demo:
 ![demo gif](https://github.com/J0N-C/recipe-deck/blob/master/readme-demo/recipe-deck-responsive-demo.gif "demo gif")
 
+### Figma Wireframing example:
+![search recipe figma](https://user-images.githubusercontent.com/64382900/228555952-f353e7e8-6ec0-49d3-9732-5783d24a74a8.JPG)
+
+
 ## Stretch Features:
 * User can check off which ingredient and instruction step they have completed as they cook to keep track of where they are
 * User can click a tag in a recipe to quickly find other recipes with the same tag
