@@ -5,7 +5,7 @@ A web application for people who want to save a deck of their own recipe cards, 
 The idea for this project began while I was viewing online recipes, realizing I was tired of scrolling down through lines of the recipe writer's backstory, and various ad windows or popups, before getting to the recipe. Then, after reaching the recipe, I would have to find where to download just the ingredients and instructions, or print the recipe as a pdf if no download is offered, to be able to save it on my own computer and view again later while cooking without scrolling through all the above again. Each site then had their own login, and there was no centralized way to organize all the recipes you had, as well as make edits or notes based on your preferences. The "card" idea came as I thought of back when I subscribed to a meal kit delivery service, they provided simple printed cardstock recipes for their provided ingredients. So I thought, it be nice to be able to write your own digital recipe card while drawing inspiration from a recipe viewed online, saved in a consolidated deck, that you could review again and make changes to at any time.
 
 ## Link to live deployment:
-https://recipe-deck.herokuapp.com/
+Live site is down at the moment, please see screenshots and gifs of it in action in this readme!
 
 Note: When registering, the sign-in/sign-up pages are intended to be for proof of concept, and emails are for identification purposes only. I recommend using a fake or placeholder email and password if you would like to register a new user for testing. The database may be irregularly reset as I continue testing and developing, so please do not save any important information within.
 
