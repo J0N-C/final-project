@@ -4,10 +4,14 @@ A web application for people who want to save a deck of their own recipe cards, 
 
 The idea for this project began while I was viewing online recipes, realizing I was tired of scrolling down through lines of the recipe writer's backstory, and various ad windows or popups, before getting to the recipe. Then, after reaching the recipe, I would have to find where to download just the ingredients and instructions, or print the recipe as a pdf if no download is offered, to be able to save it on my own computer and view again later while cooking without scrolling through all the above again. Each site then had their own login, and there was no centralized way to organize all the recipes you had, as well as make edits or notes based on your preferences. The "card" idea came as I thought of back when I subscribed to a meal kit delivery service, they provided simple printed cardstock recipes for their provided ingredients. So I thought, it be nice to be able to write your own digital recipe card while drawing inspiration from a recipe viewed online, saved in a consolidated deck, that you could review again and make changes to at any time.
 
-## Link to live deployment:
-Live site is down at the moment, please see screenshots and gifs of it in action in this readme!
+**Live site is down at the moment, please see screenshots and gifs of it in action in the Demo section below!**
 
-Note: When registering, the sign-in/sign-up pages are intended to be for proof of concept, and emails are for identification purposes only. I recommend using a fake or placeholder email and password if you would like to register a new user for testing. The database may be irregularly reset as I continue testing and developing, so please do not save any important information within.
+## Demo
+### Responsive layout & Usage Demo
+![demo gif](https://github.com/J0N-C/recipe-deck/blob/master/readme-demo/recipe-deck-responsive-demo.gif "demo gif")
+
+### Original Figma concept design wireframing snippets
+![search recipe figma](https://user-images.githubusercontent.com/64382900/228555952-f353e7e8-6ec0-49d3-9732-5783d24a74a8.JPG)
 
 ## Technologies Used:
 * JavaScript
@@ -37,14 +41,6 @@ Note: When registering, the sign-in/sign-up pages are intended to be for proof o
 * User can sort their view of their saved recipes
 * User can search their saved recipes with specific keywords by name, ingredient, or tags
 * Users can log in to manage their recipes or log out when they are done
-
-## Preview:
-### Responsive layout & Usage Demo:
-![demo gif](https://github.com/J0N-C/recipe-deck/blob/master/readme-demo/recipe-deck-responsive-demo.gif "demo gif")
-
-### Figma Wireframing example:
-![search recipe figma](https://user-images.githubusercontent.com/64382900/228555952-f353e7e8-6ec0-49d3-9732-5783d24a74a8.JPG)
-
 
 ## Stretch Features:
 * User can check off which ingredient and instruction step they have completed as they cook to keep track of where they are
